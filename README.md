@@ -18,7 +18,7 @@ El “end point” del API ha de estar desarrollado en GoLang + Graphql.
     - Security: vulnerabilidades corregidas
 
 ## Modelo de datos
-<p align="center"><img src="https://ibb.co/gR6zbT" width="300"></p>
+..
 
 ## Enlaces de interés
 Buenas prácticas y recomendaciones para mantener un CHANGELOG.md
