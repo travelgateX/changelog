@@ -18,16 +18,19 @@ El “end point” del API ha de estar desarrollado en GoLang + Graphql.
     - Security: vulnerabilidades corregidas
 
 ## Modelo de datos
-![graph](https://ibb.co/gR6zbT)
+<p align="center"><img src="https://ibb.co/gR6zbT" width="300"></p>
 
 ## Enlaces de interés
 Buenas prácticas y recomendaciones para mantener un CHANGELOG.md
+
 [https://keepachangelog.com/](https://keepachangelog.com/)
 
 Genera CHANGELOG.md de tags, issues y pull requests de GitHub
+
 [https://github.com/github-changelog-generator/github-changelog-generator](https://github.com/github-changelog-generator/github-changelog-generator)
 
 Gema de Ruby para parsear ficheros CHANGELOG.md
+
 [http://tech-angels.github.io/vandamme/](http://tech-angels.github.io/vandamme/)
 
 ### Citas
