@@ -6,13 +6,29 @@ Desarrollar un API en el que los distintos recursos puedan “alimentar” con l
 El “end point” del API ha de estar desarrollado en GoLang + Graphql.
 
 ## Requerimientos funcionales
--Los cambios se agruparán por un código de versionado incremental y en formato X.Y.Z.
--Los cambios irán ligados a un recurso
--Los cambios podrán ser de los siguientes tipos:
---Unreleased: funcionalidades todavía sin añadir
---Added: nuevas funcionalidades
---Changed: cambios en funcionalidades existentes
---Deprecated: funcionalidades que desaparecen pronto
---Removed: funcionalidades eliminadas
---Fixed: errores corregidos
---Security: vulnerabilidades corregidas
+- Los cambios se agruparán por un código de versionado incremental y en formato X.Y.Z.
+- Los cambios irán ligados a un recurso
+- Los cambios podrán ser de los siguientes tipos:
+    - Unreleased: funcionalidades todavía sin añadir
+    - Added: nuevas funcionalidades
+    - Changed: cambios en funcionalidades existentes
+    - Deprecated: funcionalidades que desaparecen pronto
+    - Removed: funcionalidades eliminadas
+    - Fixed: errores corregidos
+    - Security: vulnerabilidades corregidas
+
+## Modelo de datos
+![graph](https://ibb.co/gR6zbT)
+
+## Enlaces de interés
+Buenas prácticas y recomendaciones para mantener un CHANGELOG.md
+[https://keepachangelog.com/](https://keepachangelog.com/)
+
+Genera CHANGELOG.md de tags, issues y pull requests de GitHub
+[https://github.com/github-changelog-generator/github-changelog-generator](https://github.com/github-changelog-generator/github-changelog-generator)
+
+Gema de Ruby para parsear ficheros CHANGELOG.md
+[http://tech-angels.github.io/vandamme/](http://tech-angels.github.io/vandamme/)
+
+### Citas
+*Don’t let your friends dump git logs into changelogs*
