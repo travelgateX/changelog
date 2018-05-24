@@ -2,8 +2,8 @@ package main
 
 import (
 	"changelog/context"
+	log "changelog/log"
 	"encoding/json"
-	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -14,8 +14,9 @@ var db *gorm.DB
 var err error
 
 func main() {
-	// Load config and database
+	// Load config, database and set log lvl
 	config := context.LoadConfig(".")
+	log.SetLevel(config.DebugMode)
 	db, err = context.OpenDB(config)
 
 	// AutoMigrate : Check its working ok!! <=================
@@ -26,7 +27,12 @@ func main() {
 	router.HandleFunc("/changes", GetChanges).Methods("GET")
 
 	// Start HTTP server
-	log.Fatal(http.ListenAndServe(":"+config.HTTPPort, router))
+	log.Info("== Changelog server ON == Listening at port:%s ==", config.HTTPPort)
+	err = http.ListenAndServe(":"+config.HTTPPort, router)
+	if err != nil {
+		log.Fatal("Changelog server has exploited: %s", err)
+	}
+
 }
 
 // GetChanges : All changes handler
