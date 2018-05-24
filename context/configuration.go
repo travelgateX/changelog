@@ -2,6 +2,7 @@ package context
 
 import (
 	log "changelog/log"
+	"os"
 
 	"github.com/spf13/viper"
 )
@@ -33,12 +34,20 @@ func LoadConfig(path string) *Config {
 
 	return &Config{
 		AppName:    config.Get("app-name").(string),
-		DBHost:     config.Get("db.host").(string),
-		DBPort:     config.Get("db.port").(string),
-		DBUser:     config.Get("db.user").(string),
-		DBPassword: config.Get("db.password").(string),
-		DBName:     config.Get("db.dbname").(string),
+		DBHost:     getEnv("CHL_DBHOST", config.Get("db.host").(string)),
+		DBPort:     getEnv("CHL_DBPORT", config.Get("db.port").(string)),
+		DBUser:     getEnv("CHL_DBUSER", config.Get("db.user").(string)),
+		DBPassword: getEnv("CHL_DBPASS", config.Get("db.password").(string)),
+		DBName:     getEnv("CHL_DBNAME", config.Get("db.dbname").(string)),
 		DebugMode:  config.Get("log.debug-mode").(bool),
 		HTTPPort:   config.Get("server.http-port").(string),
 	}
+}
+
+// Get env variable when exists
+func getEnv(key, fallback string) string {
+	if value, ok := os.LookupEnv(key); ok {
+		return value
+	}
+	return fallback
 }
