@@ -1,7 +1,7 @@
 package context
 
 import (
-	"log"
+	log "changelog/log"
 
 	"github.com/spf13/viper"
 )
@@ -28,7 +28,7 @@ func LoadConfig(path string) *Config {
 	config.AddConfigPath(".")
 	err := config.ReadInConfig()
 	if err != nil {
-		log.Fatalf("Fatal error context file: %s \n", err)
+		log.Fatal("Fatal error context file: %s \n", err)
 	}
 
 	return &Config{
