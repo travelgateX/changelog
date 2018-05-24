@@ -3,6 +3,7 @@ package main
 import (
 	"changelog/context"
 	log "changelog/log"
+	"changelog/tools"
 	"encoding/json"
 	"net/http"
 
@@ -36,6 +37,7 @@ func main() {
 
 // GetChanges : All changes handler
 func GetChanges(w http.ResponseWriter, r *http.Request) {
+	log.Info("[API REQUEST] [%s]", tools.Path(r))
 	var changes []context.Change
 	db.Find(&changes)
 	json.NewEncoder(w).Encode(&changes)

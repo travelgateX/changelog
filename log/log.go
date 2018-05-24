@@ -10,7 +10,10 @@ import (
 var log = logrus.New()
 
 func init() {
-	log.Formatter = &logrus.TextFormatter{ForceColors: true}
+	log.Formatter = &logrus.TextFormatter{
+		ForceColors:   true,
+		FullTimestamp: true,
+	}
 	log.SetLevel(logrus.InfoLevel)
 	log.Out = os.Stdout
 }
@@ -26,30 +29,39 @@ func SetLevel(debug bool) {
 
 // Info wrap
 func Info(format string, a ...interface{}) {
-	log.Info(fmt.Sprintf(format, a))
+	log.Info(sFormat(format, a...))
 }
 
 // Debug wrap
 func Debug(format string, a ...interface{}) {
-	log.Debug(fmt.Sprintf(format, a))
+	log.Debug(sFormat(format, a))
 }
 
 // Warn wrap
 func Warn(format string, a ...interface{}) {
-	log.Warn(fmt.Sprintf(format, a))
+	log.Warn(sFormat(format, a))
 }
 
 // Error wrap
 func Error(format string, a ...interface{}) {
-	log.Error(fmt.Sprintf(format, a))
+	log.Error(sFormat(format, a))
 }
 
 // Fatal wrap
 func Fatal(format string, a ...interface{}) {
-	log.Fatal(fmt.Sprintf(format, a))
+	log.Fatal(sFormat(format, a))
 }
 
 // Panic wrap
 func Panic(format string, a ...interface{}) {
-	log.Panic(fmt.Sprintf(format, a))
+	log.Panic(sFormat(format, a))
+}
+
+// format helper
+func sFormat(format string, a ...interface{}) string {
+	if len(a) > 0 {
+		return fmt.Sprintf(format, a...)
+	} else {
+		return format
+	}
 }
