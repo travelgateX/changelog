@@ -28,8 +28,7 @@ func main() {
 
 	// Start HTTP server
 	log.Info("== Changelog server ON == Listening at port:%s ==", config.HTTPPort)
-	err = http.ListenAndServe(":"+config.HTTPPort, router)
-	if err != nil {
+	if err = http.ListenAndServe(":"+config.HTTPPort, router); err != nil {
 		log.Fatal("Changelog server has exploited: %s", err)
 	}
 
