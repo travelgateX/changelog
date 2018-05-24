@@ -19,10 +19,9 @@ func OpenDB(config *Config) (*gorm.DB, error) {
 	if err != nil {
 		log.Fatal("Fatal error connecting database: %s \n", err)
 	}
-	return db, nil
-}
 
-// AutoMigrate : AutoMigrate wrap
-func AutoMigrate(db *gorm.DB) *gorm.DB {
-	return db.AutoMigrate(&Change{})
+	// Debug mode
+	db.LogMode(config.SQLDebugMode)
+
+	return db, nil
 }

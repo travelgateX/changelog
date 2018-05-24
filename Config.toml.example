@@ -12,4 +12,5 @@ dbname = "CHL_DBNAME"
 http-port = "3000"
 
 [log]
-debug-mode = true
+debug-mode = false
+sql-debug-mode = false

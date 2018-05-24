@@ -21,7 +21,7 @@ func main() {
 	db, err = context.OpenDB(config)
 
 	// AutoMigrate : Check its working ok!! <=================
-	context.AutoMigrate(db)
+	context.MigrateFullDB(db)
 
 	// Config url routes
 	router := mux.NewRouter()
