@@ -17,7 +17,8 @@ type Config struct {
 	DBPassword string
 	DBName     string
 
-	DebugMode bool
+	DebugMode    bool
+	SQLDebugMode bool
 
 	HTTPPort string
 }
@@ -33,14 +34,15 @@ func LoadConfig(path string) *Config {
 	}
 
 	return &Config{
-		AppName:    config.Get("app-name").(string),
-		DBHost:     getEnv("CHL_DBHOST", config.Get("db.host").(string)),
-		DBPort:     getEnv("CHL_DBPORT", config.Get("db.port").(string)),
-		DBUser:     getEnv("CHL_DBUSER", config.Get("db.user").(string)),
-		DBPassword: getEnv("CHL_DBPASS", config.Get("db.password").(string)),
-		DBName:     getEnv("CHL_DBNAME", config.Get("db.dbname").(string)),
-		DebugMode:  config.Get("log.debug-mode").(bool),
-		HTTPPort:   config.Get("server.http-port").(string),
+		AppName:      config.Get("app-name").(string),
+		DBHost:       getEnv("CHL_DBHOST", config.Get("db.host").(string)),
+		DBPort:       getEnv("CHL_DBPORT", config.Get("db.port").(string)),
+		DBUser:       getEnv("CHL_DBUSER", config.Get("db.user").(string)),
+		DBPassword:   getEnv("CHL_DBPASS", config.Get("db.password").(string)),
+		DBName:       getEnv("CHL_DBNAME", config.Get("db.dbname").(string)),
+		DebugMode:    config.Get("log.debug-mode").(bool),
+		SQLDebugMode: config.Get("log.sql-debug-mode").(bool),
+		HTTPPort:     config.Get("server.http-port").(string),
 	}
 }
 
