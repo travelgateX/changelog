@@ -9,7 +9,8 @@ import (
 )
 
 func main() {
-	defer log.Printf("== Changelog server OFF == ")
+	log.Printf("====== Changelog server ON ======")
+	defer log.Printf("====== Changelog server OFF ======")
 
 	// Load environment variables.
 	config, err := config.LoadConfig()
@@ -17,10 +18,11 @@ func main() {
 		log.Fatalf("Error loading config file: %s", err)
 	}
 
+	// ========= TODO: get root resolver
 	// Create the request handler and parse schema.
-	// ========= TODO: load graphql schema
 	h := handler.GraphQL{
-		Schema: nil,
+		// ========= TODO: fix load schema
+		//Schema: graphql.MustParseSchema(schema.String(), nil),
 	}
 
 	// Register handlers to routes.
@@ -39,7 +41,7 @@ func main() {
 	}
 
 	// Start HTTP server.
-	log.Printf("== Changelog server ON == Listening for requests on port %s ==", config.HTTPAddr())
+	log.Printf("Listening for requests on port %s ==", config.HTTPAddr())
 	if err := s.ListenAndServe(); err != nil {
 		log.Fatalf("Changelog server has exploited: %s", err)
 	}

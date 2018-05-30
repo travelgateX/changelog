@@ -45,29 +45,10 @@
   revision = "ef8a98b0bbce4a65b5aa4c368430a80ddc533168"
 
 [[projects]]
-  name = "github.com/jinzhu/gorm"
-  packages = [
-    ".",
-    "dialects/postgres"
-  ]
-  revision = "6ed508ec6a4ecb3531899a69cbc746ccf65a4166"
-  version = "v1.9.1"
-
-[[projects]]
-  branch = "master"
-  name = "github.com/jinzhu/inflection"
+  name = "github.com/jteeuwen/go-bindata"
   packages = ["."]
-  revision = "04140366298a54a039076d798123ffa108fff46c"
-
-[[projects]]
-  branch = "master"
-  name = "github.com/lib/pq"
-  packages = [
-    ".",
-    "hstore",
-    "oid"
-  ]
-  revision = "90697d60dd844d5ef6ff15135d0203f65d2f53b8"
+  revision = "bbd0c6e271208dce66d8fda4bc536453cd27fc4a"
+  version = "v3.0.7"
 
 [[projects]]
   name = "github.com/magiconair/properties"
@@ -164,6 +145,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "f225cca81ab1288d3bd99b59674cd511ceef080ecbfa30f8e7597d289e1672e6"
+  inputs-digest = "d4cf4dc4abd8fe66de8def9b6d3c7471a959e72bdcd3844bbf488236a103ad3e"
   solver-name = "gps-cdcl"
   solver-version = 1
