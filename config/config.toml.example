@@ -1,0 +1,20 @@
+app-name = "changelog"
+version = 1.0
+
+[db]
+host = "localhost"      # ENV["CHL_DBHOST"]
+port = "5432"           # ENV["CHL_DBPORT"]
+user = "changelog"      # ENV["CHL_DBUSER"]
+password = "changelog"  # ENV["CHL_DBPASS"]
+dbname = "changelog-db" # ENV["CHL_DBNAME"]
+
+[server]
+http-host = "localhost"
+http-port = "3000"
+http-read-header-timeout = 1
+http-write-timeout = 10
+http-idle-timeout = 90
+
+[log]
+debug-mode = false
+sql-debug-mode = false
