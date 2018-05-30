@@ -1,0 +1,19 @@
+# Gropuped changes that have a delivery date and version number
+type Release {
+    # Unique identifier
+    id: ID!
+    # MAJOR version, incompatible changes,
+    x: Int
+    # MINOR version, new functionality in a backwards-compatible manner 
+    y: Int
+    # PATCH version, backwards-compatible bug fixes.
+    z: Int
+    # Delivery date proposal
+    delivery: Time
+    # A list of changes that are in this release
+    changes: [Changes]
+    # The RFC3339 date format of the time that this resource was created.
+    createdAt: Time!
+    # The RFC3339 date format of the time that this resource was edited.
+    editedAt: Time
+}

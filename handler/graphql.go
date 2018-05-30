@@ -34,6 +34,7 @@ func (h GraphQL) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// ========= TODO: authentification here?
 	// ==========  <necessary explanation>  ==========
 	// ==> authorization, company, context??????
 	// company := r.Context().Value(authorization.ContextKey)
