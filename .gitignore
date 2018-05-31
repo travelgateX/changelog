@@ -1,6 +1,6 @@
-*.exe
 /vendor/*
-/config/config.toml
 /schema/bindata.go
+*.exe
+config.toml
 .vscode
 debug

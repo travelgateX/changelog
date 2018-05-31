@@ -4,8 +4,8 @@ version = 1.0
 [db]
 host = "localhost"      # ENV["CHL_DBHOST"]
 port = "5432"           # ENV["CHL_DBPORT"]
-user = "changelog"      # ENV["CHL_DBUSER"]
-password = "changelog"  # ENV["CHL_DBPASS"]
+user = "default"        # ENV["CHL_DBUSER"]
+password = "default"    # ENV["CHL_DBPASS"]
 dbname = "changelog-db" # ENV["CHL_DBNAME"]
 
 [server]

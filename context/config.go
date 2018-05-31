@@ -1,4 +1,4 @@
-package config
+package context
 
 import (
 	"fmt"
@@ -34,8 +34,8 @@ func (c Config) HTTPAddr() string {
 // LoadConfig : load config from Config.toml
 func LoadConfig() (*Config, error) {
 	viper := viper.New()
-	viper.SetConfigName("config")
-	viper.AddConfigPath("./config/")
+	viper.SetConfigName("Config")
+	viper.AddConfigPath(".")
 
 	err := viper.ReadInConfig()
 	if err != nil {

@@ -1,5 +1,3 @@
-# Change Log allowed mutations
 type Mutation {
-  # Create change
-  createChange(body: String!): Change
+    createCommit(message: String!, user: String, release: String, resource: String, category: String): Commit
 }

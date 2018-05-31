@@ -1,5 +1,3 @@
-# Change Log allowed querys
 type Query {
-  # Obtain a list with all changes
-  changes(first: Int): [Change!]
+    commits(resource: String): [Commit!]
 }
