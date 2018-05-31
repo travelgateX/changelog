@@ -43,13 +43,14 @@ func main() {
 	}
 
 	// Register handlers to routes.
-	router := http.NewServeMux()
-	router.Handle("/graphql", h)
-	router.Handle("/graphql/", h)
+	r := http.NewServeMux()
+	r.Handle("/", handler.GraphiQL{})
+	r.Handle("/graphql", h)
+	r.Handle("/graphql/", h)
 
 	// Configure the HTTP server.
 	s := &http.Server{
-		Handler:           router,
+		Handler:           r,
 		Addr:              ":" + config.HTTPPort,
 		ReadHeaderTimeout: config.HTTPReadHeaderTimeout,
 		WriteTimeout:      config.HTTPWriteTimeout,

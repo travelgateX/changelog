@@ -1,0 +1,5 @@
+# Change Log allowed mutations
+type Mutation {
+  # Create change
+  createChange(body: String!): Change
+}
