@@ -22,12 +22,13 @@ func NewRoot(db *gorm.DB) (*QueryResolver, error) {
 	return &QueryResolver{db: db}, nil
 }
 
-// ChangeTypesQueryArgs : are the arguments for the "ChangeTypes" query.
-type ChangeTypesQueryArgs struct {
+// ChangeQueryArgs : are the arguments for the "Change" query.
+type ChangeQueryArgs struct {
+	First *int
 }
 
-// ChangeTypes : resolves a list of all change types
-func (r QueryResolver) ChangeTypes(ctx context.Context, args ChangeTypesQueryArgs) (*[]*ChangeTypeResolver, error) {
+// Changes : resolves a list of all changes
+func (r QueryResolver) Changes(ctx context.Context, args ChangeQueryArgs) (*[]*ChangeResolver, error) {
 	// ========= TODO: return something nice
 	return nil, nil
 }

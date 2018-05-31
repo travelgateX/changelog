@@ -4,12 +4,4 @@ type Change {
     id: ID!
     # Descriptive description about the current change
     body: String
-    # Change type to which it belongs
-    changeType: ChangeType!
-    # Release to which it belongs (optional)
-    release: Release
-    # The RFC3339 date format of the time that this resource was created.
-    createdAt: Time!
-    # The RFC3339 date format of the time that this resource was edited.
-    editedAt: Time
 }

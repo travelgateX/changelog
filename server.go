@@ -7,10 +7,10 @@ import (
 	"changelog/resolver"
 	"changelog/schema"
 
-	graphql "github.com/graph-gophers/graphql-go"
-
 	"log"
 	"net/http"
+
+	graphql "github.com/graph-gophers/graphql-go"
 )
 
 func main() {
@@ -32,28 +32,12 @@ func main() {
 		log.Fatalf("cant get root resolver: %s", err)
 	}
 
-	// Create the request handler and parse schema.
-	//str := schema.String()
-
-	/*
-		f, err := os.Create("schema.raw")
-		if err != nil {
-			log.Fatalf("cant write schema log file", err.Error())
-		}
-		if _, err := f.WriteString(str); err != nil {
-			log.Fatalf("cant flush string schema in log file", err.Error())
-		}
-		if err := f.Sync(); err != nil {
-			log.Fatalf("cant sync schema log file", err.Error())
-		}
-	*/
-
 	sch, err := graphql.ParseSchema(schema.String(), root)
 	if err != nil {
-		log.Printf("su puta madre: %v", err)
-		return
+		log.Fatalf("su puta malder: %v", err)
 	}
 
+	// Create the request handler and parse schema.
 	h := handler.GraphQL{
 		Schema: sch,
 	}
