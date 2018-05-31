@@ -11,7 +11,7 @@ type Release {
     # Delivery date proposal
     delivery: Time
     # A list of changes that are in this release
-    changes: [Changes]
+    # changes: [Change]
     # The RFC3339 date format of the time that this resource was created.
     createdAt: Time!
     # The RFC3339 date format of the time that this resource was edited.

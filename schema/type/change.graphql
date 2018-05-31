@@ -5,7 +5,7 @@ type Change {
     # Descriptive description about the current change
     body: String
     # Change type to which it belongs
-    changeType: changeType!
+    changeType: ChangeType!
     # Release to which it belongs (optional)
     release: Release
     # The RFC3339 date format of the time that this resource was created.

@@ -1,5 +1,5 @@
 # Change Log allowed querys
 type Query {
-  # Obtain a list of changes limited by params
-  changes(first: Int): [Change!]
+  # Obtain a list with all possible change types
+  changeTypes(): [ChangeType!]
 }

@@ -1,12 +1,3 @@
-package schema
-
-import (
-	"bytes"
-	"io/ioutil"
-
-	graphql "github.com/graph-gophers/graphql-go"
-)
-
 // ==========  <necessary explanation>  ==========
 // ==========  <necessary explanation>  ==========
 // ==========  <necessary explanation>  ==========
@@ -14,6 +5,11 @@ import (
 // a binary format.
 //
 //go:generate go-bindata -ignore=\.go -pkg=schema -o=bindata.go ./...
+package schema
+
+import (
+	"bytes"
+)
 
 // String reads the .graphql schema files from the generated _bindata.go file, concatenating the
 // files together into one string.
@@ -31,22 +27,5 @@ func String() string {
 			buf.WriteByte('\n')
 		}
 	}
-
 	return buf.String()
-}
-
-// MustParseSchema : load current graphql schema, panics on error
-// this function loads schema from one unique file .grapqh
-func MustParseSchema(queryResolver interface{}) *graphql.Schema {
-	file, err := ioutil.ReadFile("./schema/schema.graphql")
-	if err != nil {
-		panic("cant read schema.graphql, " + err.Error())
-	}
-
-	schema, err := graphql.ParseSchema(string(file), queryResolver)
-	if err != nil {
-		panic("cant parse schema.graphql, " + err.Error())
-	}
-
-	return schema
 }

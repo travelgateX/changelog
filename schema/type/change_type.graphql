@@ -5,7 +5,7 @@ type ChangeType {
     # Name of the type of change added, changed, deprecated...
     name: String!
     # A list of changes of this type
-    changes: [Change]
+    # changes: [Change]
     # The RFC3339 date format of the time that this resource was created.
     createdAt: Time!
     # The RFC3339 date format of the time that this resource was edited.

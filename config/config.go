@@ -1,6 +1,7 @@
 package config
 
 import (
+	"fmt"
 	"os"
 	"time"
 
@@ -21,14 +22,13 @@ type Config struct {
 	HTTPWriteTimeout      time.Duration
 	HTTPIdleTimeout       time.Duration
 
-	AppName      string
-	DebugMode    bool
-	SQLDebugMode bool
+	AppName   string
+	DebugMode bool
 }
 
 // HTTPAddr : get full address
 func (c Config) HTTPAddr() string {
-	return (c.HTTPHost + ":" + c.HTTPPort)
+	return ("http://" + c.HTTPHost + ":" + c.HTTPPort)
 }
 
 // LoadConfig : load config from Config.toml
@@ -55,10 +55,15 @@ func LoadConfig() (*Config, error) {
 		HTTPWriteTimeout:      viper.GetDuration("server.write-timeout") * time.Second,
 		HTTPIdleTimeout:       viper.GetDuration("server.idle-timeout") * time.Second,
 
-		AppName:      viper.Get("app-name").(string),
-		DebugMode:    viper.Get("log.debug-mode").(bool),
-		SQLDebugMode: viper.Get("log.sql-debug-mode").(bool),
+		AppName:   viper.Get("app-name").(string),
+		DebugMode: viper.Get("log.debug-mode").(bool),
 	}, nil
+}
+
+// GetConnString : get database connection string
+func (c *Config) GetConnString() string {
+	return fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
+		c.DBHost, c.DBPort, c.DBUser, c.DBPassword, c.DBName)
 }
 
 // getEnv : Get env variable when exists

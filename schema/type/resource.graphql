@@ -5,7 +5,7 @@ type Resource {
     # Name of the resource
     name: String!
     # A list of releases that are in this resource
-    releases: [Releases]
+    releases: [Release]
     # The RFC3339 date format of the time that this resource was created.
     createdAt: Time!
     # The RFC3339 date format of the time that this resource was edited.

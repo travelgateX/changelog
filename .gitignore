@@ -2,3 +2,5 @@
 /vendor/*
 /config/config.toml
 /schema/bindata.go
+.vscode
+debug
