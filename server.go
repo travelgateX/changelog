@@ -19,11 +19,14 @@ func main() {
 	config := config.MustLoadConfig()                  // load config file
 	db := context.MustOpenDB(config.GetDBConnString()) // load data base
 	defer db.Close()                                   // defer database close
-	root := resolver.NewRoot(db)                       // get query root resolver
+
+	qRoot := resolver.NewQueryRoot(db) // get query root resolver
+	//mRoot := resolver.NewMutationRoot(db)     // get mutation root resolver
+	schema := schema.String(config.DebugMode) // full schema string
 
 	// Attach parsed schema to handler.
 	h := handler.GraphQL{
-		Schema: graphql.MustParseSchema(schema.String(config.DebugMode), root),
+		Schema: graphql.MustParseSchema(schema, qRoot),
 	}
 
 	// Register handlers to routes.
