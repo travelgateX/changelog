@@ -5,14 +5,11 @@ import (
 )
 
 // Resolver : root resolver
-type Resolver struct{}
-
-// NewQueryRoot : generates query root entry point
-func NewQueryRoot(db *gorm.DB) *QueryResolver {
-	return &QueryResolver{db: db}
+type Resolver struct {
+	db *gorm.DB
 }
 
-// NewMutationRoot : generates mutation root entry point
-func NewMutationRoot(db *gorm.DB) *MutationResolver {
-	return &MutationResolver{db: db}
+// NewRoot : generates query root entry point
+func NewRoot(db *gorm.DB) *Resolver {
+	return &Resolver{db: db}
 }

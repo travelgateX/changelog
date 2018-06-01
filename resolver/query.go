@@ -3,14 +3,7 @@ package resolver
 import (
 	"changelog/model"
 	"context"
-
-	"github.com/jinzhu/gorm"
 )
-
-// QueryResolver :
-type QueryResolver struct {
-	db *gorm.DB
-}
 
 // CommitsQueryArgs : commits request
 type CommitsQueryArgs struct {
@@ -18,7 +11,7 @@ type CommitsQueryArgs struct {
 }
 
 // Commits resolves a list of commits. If no arguments are provided, all commits are fetched.
-func (r QueryResolver) Commits(ctx context.Context, args CommitsQueryArgs) (*[]*CommitResolver, error) {
+func (r Resolver) Commits(ctx context.Context, args CommitsQueryArgs) (*[]*CommitResolver, error) {
 	var commits []model.Commit
 
 	// TODO: resolver going directly to data base... new layer here?
