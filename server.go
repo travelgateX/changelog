@@ -2,10 +2,10 @@ package main
 
 import (
 	"changelog/config"
+	"changelog/context"
 	"changelog/handler"
 	"changelog/resolver"
 	"changelog/schema"
-	"changelog/service"
 
 	"log"
 	"net/http"
@@ -16,17 +16,10 @@ import (
 func main() {
 	log.Printf("====== Changelog server ON ======")
 
-	// Load environment variables.
-	config := config.MustLoadConfig()
-
-	// Get database connection
-	db := service.MustOpenDB(config.GetDBConnString())
-
-	// Get root resolver
-	root, err := resolver.NewRoot(db)
-	if err != nil {
-		log.Fatalf("cant get root resolver: %s", err)
-	}
+	config := config.MustLoadConfig()                  // load config file
+	db := context.MustOpenDB(config.GetDBConnString()) // load data base
+	defer db.Close()                                   // defer database close
+	root := resolver.NewRoot(db)                       // get query root resolver
 
 	// Attach parsed schema to handler.
 	h := handler.GraphQL{

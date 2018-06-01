@@ -1,4 +1,4 @@
-package service
+package context
 
 import (
 	"github.com/jinzhu/gorm"
@@ -6,11 +6,6 @@ import (
 	// Postgres driver
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
-
-// DB : gorm database connection
-type DB struct {
-	db *gorm.DB
-}
 
 // OpenDB : new database connection
 func OpenDB(conStr string) (*gorm.DB, error) {

@@ -1,6 +1,7 @@
 package resolver
 
 import (
+	"changelog/model"
 	"context"
 
 	"github.com/jinzhu/gorm"
@@ -16,12 +17,19 @@ type CommitsQueryArgs struct {
 	Resource *string
 }
 
-// Films resolves a list of films. If no arguments are provided, all films are fetched.
-func (r QueryResolver) Films(ctx context.Context, args CommitsQueryArgs) (*[]*CommitResolver, error) {
-	page, err := r.client.SearchFilms(ctx, strValue(args.Title))
-	if err != nil {
-		return nil, err
+// Commits resolves a list of commits. If no arguments are provided, all commits are fetched.
+func (r QueryResolver) Commits(ctx context.Context, args CommitsQueryArgs) (*[]*CommitResolver, error) {
+	var commits []model.Commit
+
+	// TODO: resolver going directly to data base... new layer here?
+	r.db.Find(&commits)
+
+	// TODO: load resolvers, handle errors
+	var resolvers = make([]*CommitResolver, 0, len(commits))
+	for _, commit := range commits {
+		resolver := &CommitResolver{commit: commit}
+		resolvers = append(resolvers, resolver)
 	}
 
-	return NewFilms(ctx, NewFilmsArgs{Page: page})
+	return &resolvers, nil
 }

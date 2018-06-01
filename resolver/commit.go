@@ -23,18 +23,23 @@ func (r *CommitResolver) Message() string {
 }
 
 // User : resolves commit user
-func (r *CommitResolver) User() string {
-	return r.commit.User
+func (r *CommitResolver) User() *string {
+	return &r.commit.User
 }
 
 // Release : resolves commit release
-func (r *CommitResolver) Release() string {
-	return r.commit.Release
+func (r *CommitResolver) Release() *string {
+	return &r.commit.Release
+}
+
+// Resource : resolves commit release
+func (r *CommitResolver) Resource() *string {
+	return &r.commit.Resource
 }
 
 // Category : resolves commit category
-func (r *CommitResolver) Category() string {
-	return r.commit.Category
+func (r *CommitResolver) Category() *string {
+	return &r.commit.Category
 }
 
 // CreatedAt : resolves commit created_at
