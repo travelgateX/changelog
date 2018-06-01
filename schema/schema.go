@@ -1,31 +1,39 @@
-// Package schema ...
-// ==========  <necessary explanation>  ==========
-// ==========  <necessary explanation>  ==========
-// Use `go generate` to pack all *.graphql files under this directory (and sub-directories) into
-// a binary format.
-// the magic happens here
+//Package schema ...
 //go:generate go-bindata -ignore=\.go -pkg=schema -o=bindata.go ./...
 package schema
 
 import (
 	"bytes"
+	"os"
 )
 
-// String reads the .graphql schema files from the generated _bindata.go file, concatenating the
-// files together into one string.
-//
-// If this method complains about not finding functions AssetNames() or MustAsset(),
-// run `go generate` against this package to generate the functions.
-func String() string {
+// String : Run `go generate` against this package
+func String(saveFile bool) string {
 	buf := bytes.Buffer{}
 	for _, name := range AssetNames() {
 		b := MustAsset(name)
 		buf.Write(b)
-
-		// Add a newline if the file does not end in a newline.
 		if len(b) > 0 && b[len(b)-1] != '\n' {
 			buf.WriteByte('\n')
 		}
 	}
-	return buf.String()
+	str := buf.String()
+	if saveFile {
+		SaveSchema(str)
+	}
+	return str
+}
+
+// SaveSchema : save the schema in a file
+func SaveSchema(str string) {
+	f, err := os.Create("./schema/schema.graphql.debug")
+	if err != nil {
+		panic("cant write schema log file" + err.Error())
+	}
+	if _, err := f.WriteString(str); err != nil {
+		panic("cant flush string schema in log file" + err.Error())
+	}
+	if err := f.Sync(); err != nil {
+		panic("cant sync schema log file" + err.Error())
+	}
 }

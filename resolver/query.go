@@ -6,18 +6,22 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
-// QueryResolver : is the entry point for all top-level read operations.
+// QueryResolver :
 type QueryResolver struct {
 	db *gorm.DB
 }
 
-// ChangeQueryArgs : are the arguments for the "Change" query.
-type ChangeQueryArgs struct {
-	First *int
+// CommitsQueryArgs : commits request
+type CommitsQueryArgs struct {
+	Resource *string
 }
 
-// Changes : resolves a list of all changes
-func (r QueryResolver) Changes(ctx context.Context, args ChangeQueryArgs) (*[]*ChangeResolver, error) {
-	// ========= TODO: return something nice
-	return nil, nil
+// Films resolves a list of films. If no arguments are provided, all films are fetched.
+func (r QueryResolver) Films(ctx context.Context, args CommitsQueryArgs) (*[]*CommitResolver, error) {
+	page, err := r.client.SearchFilms(ctx, strValue(args.Title))
+	if err != nil {
+		return nil, err
+	}
+
+	return NewFilms(ctx, NewFilmsArgs{Page: page})
 }

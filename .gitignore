@@ -1,6 +1,8 @@
 /vendor/*
 /schema/bindata.go
+/schema/full_schema.graphql.debug
 *.exe
+*.debug
 config.toml
 .vscode
 debug

@@ -3,9 +3,9 @@ package main
 import (
 	"changelog/config"
 	"changelog/handler"
-	"changelog/model"
 	"changelog/resolver"
 	"changelog/schema"
+	"changelog/service"
 
 	"log"
 	"net/http"
@@ -15,16 +15,12 @@ import (
 
 func main() {
 	log.Printf("====== Changelog server ON ======")
-	defer log.Printf("====== Changelog server OFF ======")
 
 	// Load environment variables.
-	config, err := config.LoadConfig()
-	if err != nil {
-		log.Fatalf("cant load config file: %s", err)
-	}
+	config := config.MustLoadConfig()
 
 	// Get database connection
-	db := model.MustOpenDB(config.GetConnString())
+	db := service.MustOpenDB(config.GetDBConnString())
 
 	// Get root resolver
 	root, err := resolver.NewRoot(db)
@@ -32,14 +28,9 @@ func main() {
 		log.Fatalf("cant get root resolver: %s", err)
 	}
 
-	sch, err := graphql.ParseSchema(schema.String(), root)
-	if err != nil {
-		log.Fatalf("su puta malder: %v", err)
-	}
-
-	// Create the request handler and parse schema.
+	// Attach parsed schema to handler.
 	h := handler.GraphQL{
-		Schema: sch,
+		Schema: graphql.MustParseSchema(schema.String(config.DebugMode), root),
 	}
 
 	// Register handlers to routes.
@@ -63,4 +54,6 @@ func main() {
 	if err := s.ListenAndServe(); err != nil {
 		log.Fatalf("Changelog server has exploited: %s", err)
 	}
+
+	log.Printf("====== Changelog server OFF ======")
 }
