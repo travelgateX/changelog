@@ -13,3 +13,11 @@ type Resolver struct {
 func NewRoot(db *gorm.DB) *Resolver {
 	return &Resolver{db: db}
 }
+
+// getOptionalStrValue : helper that check if string if a pointer or not
+func getOptionalStrValue(val *string) string {
+	if val == nil {
+		return ""
+	}
+	return *val
+}

@@ -1,6 +1,9 @@
 package context
 
 import (
+	"changelog/config"
+	"changelog/model"
+
 	"github.com/jinzhu/gorm"
 
 	// Postgres driver
@@ -8,17 +11,24 @@ import (
 )
 
 // OpenDB : new database connection
-func OpenDB(conStr string) (*gorm.DB, error) {
-	db, err := gorm.Open("postgres", conStr)
+func OpenDB(c *config.Config) (*gorm.DB, error) {
+	db, err := gorm.Open("postgres", c.GetDBConnString())
 	if err != nil {
 		return nil, err
 	}
+
+	// DB debug mode
+	db.LogMode(c.DebugMode)
+
+	// TODO: develop better migrate database version, that's dangerous
+	db.AutoMigrate(&model.Commit{})
+
 	return db, nil
 }
 
 // MustOpenDB : new database connection, panics on error
-func MustOpenDB(conStr string) *gorm.DB {
-	db, err := OpenDB(conStr)
+func MustOpenDB(c *config.Config) *gorm.DB {
+	db, err := OpenDB(c)
 	if err != nil {
 		panic("fatal error connecting database: " + err.Error())
 	}

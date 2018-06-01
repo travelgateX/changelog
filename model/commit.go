@@ -2,7 +2,7 @@ package model
 
 // Commit : data model
 type Commit struct {
-	ID        string `json:"id" db:"id"`
+	ID        string `json:"id" db:"id" gorm:"primary_key"`
 	Message   string `json:"message" db:"message"`
 	User      string `json:"user" db:"user"`
 	Release   string `json:"release" db:"release"`

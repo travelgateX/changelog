@@ -16,9 +16,9 @@ import (
 func main() {
 	log.Printf("====== Changelog server ON ======")
 
-	config := config.MustLoadConfig()                  // load config file
-	db := context.MustOpenDB(config.GetDBConnString()) // load data base
-	defer db.Close()                                   // defer database close
+	config := config.MustLoadConfig() // load config file
+	db := context.MustOpenDB(config)  // load data base
+	defer db.Close()                  // defer database close
 
 	root := resolver.NewRoot(db)              // get root resolver
 	schema := schema.String(config.DebugMode) // full schema string
