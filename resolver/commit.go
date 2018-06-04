@@ -38,8 +38,8 @@ func (r *CommitResolver) Resource() *string {
 }
 
 // Category : resolves commit category
-func (r *CommitResolver) Category() *string {
-	return &r.commit.Category
+func (r *CommitResolver) Category() model.Category {
+	return r.commit.Category
 }
 
 // CreatedAt : resolves commit created_at
