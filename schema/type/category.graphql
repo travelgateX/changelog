@@ -1,0 +1,9 @@
+# Commit category
+enum Category {
+    ADDED
+    CHANGED
+    DEPRECATED
+    REMOVED
+    FIXED
+    SECURITY
+}

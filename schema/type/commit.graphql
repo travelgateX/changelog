@@ -11,7 +11,7 @@ type Commit {
   # Resource which changes have been made
   resource: String
   # Commit category [Added, Changed, Deprecated, Removed, Fixed, Security]
-  category: String
+  category: Category!
   # The RFC3339 date format of the time that this commit was created.
   createdAt: Time!
 }
