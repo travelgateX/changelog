@@ -20,7 +20,7 @@ func (r Resolver) Commits(ctx context.Context, args CommitsQueryArgs) (*[]*Commi
 	// TODO: load resolvers, handle errors
 	var resolvers = make([]*CommitResolver, 0, len(commits))
 	for _, commit := range commits {
-		resolver := &CommitResolver{commit: commit}
+		resolver := &CommitResolver{Commit: commit}
 		resolvers = append(resolvers, resolver)
 	}
 
