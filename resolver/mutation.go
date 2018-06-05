@@ -23,7 +23,7 @@ func (r Resolver) CreateCommit(ctx context.Context, args CreateCommitMutationArg
 		Release:   getOptionalStrValue(args.Release),
 		Resource:  getOptionalStrValue(args.Resource),
 		Category:  args.Category,
-		CreatedAt: time.Now().String(),
+		CreatedAt: time.Now(),
 	}
 	r.db.Create(&commit)
 

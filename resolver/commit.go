@@ -3,7 +3,6 @@ package resolver
 import (
 	"changelog/model"
 	"fmt"
-	"time"
 
 	graphql "github.com/graph-gophers/graphql-go"
 )
@@ -44,7 +43,6 @@ func (r *CommitResolver) Category() model.Category {
 }
 
 // CreatedAt : resolves commit created_at
-func (r *CommitResolver) CreatedAt() (graphql.Time, error) {
-	t, err := time.Parse("2006-01-02", r.commit.CreatedAt)
-	return graphql.Time{Time: t}, err
+func (r *CommitResolver) CreatedAt() graphql.Time {
+	return graphql.Time{Time: r.commit.CreatedAt}
 }
