@@ -26,7 +26,7 @@ func main() {
 	)
 
 	// Load config file
-	if c, err = config.LoadConfig(); err != nil {
+	if c, err = config.LoadConfig("./config"); err != nil {
 		log.Fatalf("fatal error, cant parse config file. %v", err)
 	}
 
