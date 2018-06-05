@@ -27,5 +27,5 @@ func (r Resolver) CreateCommit(ctx context.Context, args CreateCommitMutationArg
 	}
 	r.db.Create(&commit)
 
-	return &CommitResolver{commit: commit}, nil
+	return &CommitResolver{Commit: commit}, nil
 }
