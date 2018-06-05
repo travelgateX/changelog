@@ -11,22 +11,38 @@ import (
 	"net/http"
 
 	graphql "github.com/graph-gophers/graphql-go"
+	"github.com/jinzhu/gorm"
 )
 
 func main() {
 	log.Printf("====== Changelog server ON ======")
+	defer log.Printf("====== Changelog server OFF ======")
 
-	config := config.MustLoadConfig() // load config file
-	db := context.MustOpenDB(config)  // load data base
-	defer db.Close()                  // defer database close
+	var (
+		err error
+		c   *config.Config
+		db  *gorm.DB
+		sch *graphql.Schema
+	)
 
-	root := resolver.NewRoot(db)              // get root resolver
-	schema := schema.String(config.DebugMode) // full schema string
+	// Load config file
+	if c, err = config.LoadConfig(); err != nil {
+		log.Fatalf("fatal error, cant parse config file. %v", err)
+	}
+
+	// Open database connection
+	if db, err = context.OpenDB(c); err != nil {
+		log.Fatalf("fatal error, cant open database connection. %v", err)
+	}
+	defer db.Close()
+
+	// Parse graphql schema
+	if sch, err = graphql.ParseSchema(schema.String(c.DebugMode), resolver.NewRoot(db)); err != nil {
+		log.Fatalf("fatal error, cant parse graphql schema. %v", err)
+	}
 
 	// Attach parsed schema to handler.
-	h := handler.GraphQL{
-		Schema: graphql.MustParseSchema(schema, root),
-	}
+	h := handler.GraphQL{Schema: sch}
 
 	// Register handlers to routes.
 	r := http.NewServeMux()
@@ -37,18 +53,18 @@ func main() {
 	// Configure the HTTP server.
 	s := &http.Server{
 		Handler:           r,
-		Addr:              ":" + config.HTTPPort,
-		ReadHeaderTimeout: config.HTTPReadHeaderTimeout,
-		WriteTimeout:      config.HTTPWriteTimeout,
-		IdleTimeout:       config.HTTPIdleTimeout,
+		Addr:              ":" + c.HTTPPort,
+		ReadHeaderTimeout: c.HTTPReadHeaderTimeout,
+		WriteTimeout:      c.HTTPWriteTimeout,
+		IdleTimeout:       c.HTTPIdleTimeout,
 		MaxHeaderBytes:    http.DefaultMaxHeaderBytes,
 	}
 
 	// Start HTTP server.
-	log.Printf("Listening for requests at %s", config.HTTPAddr())
+	log.Printf("Listening for requests at %s", c.HTTPAddr())
 	if err := s.ListenAndServe(); err != nil {
-		log.Fatalf("Changelog server has exploited: %s", err)
+		log.Fatalf("fatal error, changelog server has exploited: %s", err)
+		return
 	}
 
-	log.Printf("====== Changelog server OFF ======")
 }
