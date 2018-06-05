@@ -2,6 +2,7 @@ package resolver
 
 import (
 	"changelog/model"
+	"fmt"
 	"time"
 
 	graphql "github.com/graph-gophers/graphql-go"
@@ -12,9 +13,9 @@ type CommitResolver struct {
 	commit model.Commit
 }
 
-// ID unique Commit identifier
+// ID unique Commit identifier -> fmt.Sprintf (int32 -> string)
 func (r *CommitResolver) ID() graphql.ID {
-	return graphql.ID(r.commit.ID)
+	return graphql.ID(fmt.Sprint(r.commit.ID))
 }
 
 // Message : resolves commit message
