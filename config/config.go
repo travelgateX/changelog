@@ -32,10 +32,10 @@ func (c Config) HTTPAddr() string {
 }
 
 // LoadConfig : load config from config.toml
-func LoadConfig() (*Config, error) {
+func LoadConfig(path string) (*Config, error) {
 	c := viper.New()
 	c.SetConfigName("config")
-	c.AddConfigPath("./config")
+	c.AddConfigPath(path)
 
 	err := c.ReadInConfig()
 	if err != nil {
@@ -61,8 +61,8 @@ func LoadConfig() (*Config, error) {
 }
 
 // MustLoadConfig : load config from config.toml, panics on error
-func MustLoadConfig() *Config {
-	viper, err := LoadConfig()
+func MustLoadConfig(path string) *Config {
+	viper, err := LoadConfig(path)
 	if err != nil {
 		panic("cant load config file:  " + err.Error())
 	}
