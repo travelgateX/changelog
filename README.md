@@ -1,37 +1,51 @@
-# API Change Log. Análisis
-## Alcance proyecto
-Desarrollar un API en el que los distintos recursos puedan “alimentar” con los cambios que se van realizando. Se pretende agrupar y estandarizar una práctica común a la vez de comprobar si es posible “automatizar” las entradas con los commits de cada recurso en particular.
+# ChangeLog API Graphql
+"ChangeLog API Graphql" is an API interface implemented in Graphql that allow to save and categorize changes to available resources centrally.
 
-## Requerimientos técnicos
-El “end point” del API ha de estar desarrollado en GoLang + Graphql.
+## Config file
+TODO: complete info
 
-## Requerimientos funcionales
-- Los cambios se agruparán por un código de versionado incremental y en formato X.Y.Z.
-- Los cambios irán ligados a un recurso
-- Los cambios podrán ser de los siguientes tipos:
-    - Unreleased: funcionalidades todavía sin añadir
-    - Added: nuevas funcionalidades
-    - Changed: cambios en funcionalidades existentes
-    - Deprecated: funcionalidades que desaparecen pronto
-    - Removed: funcionalidades eliminadas
-    - Fixed: errores corregidos
-    - Security: vulnerabilidades corregidas
+## Generating Graphql schema
+The graphql schema is segmented by type for a better understanding. We use go generate command tool to join and generate the final schema file, the go-bindata package is required for this action. You can see more there [go-bindata](https://github.com/jteeuwen/go-bindata). After execute this command you will see `bindata.go` file in your schema folder.
 
-## Modelo de datos
-..
+```bash
+$ go generate ./schema/
+```
 
-## Enlaces de interés
-Buenas prácticas y recomendaciones para mantener un CHANGELOG.md
+## Load package dependecy
+Golang dependency management tool [dep](https://github.com/golang/dep) it's required for this project. Use the following command to fetch all packages that project needs inside `vendor` folder.
 
-[https://keepachangelog.com/](https://keepachangelog.com/)
+```bash
+$ dep ensure
+```
 
-Genera CHANGELOG.md de tags, issues y pull requests de GitHub
+## Database migrations
+The data persistence used for this project is Postgresql DB. We use [gorm.io](http://gorm.io) to map data from the database, we also use [gormigrate](https://github.com/go-gormigrate/gormigrate) to maintain different versions of the database.
 
-[https://github.com/github-changelog-generator/github-changelog-generator](https://github.com/github-changelog-generator/github-changelog-generator)
+The full migrations functionality is not yet developed but now there are two operations available. 
 
-Gema de Ruby para parsear ficheros CHANGELOG.md
+```bash
+# Migrate all migrations files
+$ go run context/migration/*.go migrate
 
-[http://tech-angels.github.io/vandamme/](http://tech-angels.github.io/vandamme/)
+# Rollback last migration
+$ go run context/migration/*.go rollback
+```
 
-### Citas
+To add a new migration follow the steps below:
+1. Creates a new single file inside `context/migrations` folder and names it with format: `yyyymmddhhmm_MigrateShortDescription.go`
+2. Follow the structure of existing migrations like 201806051541_CreateCommitsTable and generates new one. Remember to pay special attention to the generation of the format number, it must be sequential with the previous one.
+3. Name the main function of your migration like: `myyyymmddhhmmMigrateShortDescription()` (add `m` before and remove underscore)
+4. Tries to do atomic migrations, which can add a field/table but have an equivalent rollback function to go "backwards".
+5. Call this funcion in `context/migration/migration.go` and add this one to allMigrations array.
+
+## Launch the server
+Once the above actions have been executed, you can run the server using the following:
+
+```bash
+$ go run server.go
+```
+## Remember
+- If you change the schema.graphql you need to generate again bindata.go.
+
+## Citas
 *Don’t let your friends dump git logs into changelogs*
