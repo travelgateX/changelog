@@ -64,7 +64,6 @@ func main() {
 	log.Printf("Listening for requests at %s", c.HTTPAddr())
 	if err := s.ListenAndServe(); err != nil {
 		log.Fatalf("fatal error, changelog server has exploited: %s", err)
-		return
 	}
 
 }
