@@ -21,3 +21,11 @@ func getOptionalStrValue(val *string) string {
 	}
 	return *val
 }
+
+// getOptionalBoolValue : helper that check if bool if a pointer or not
+func getOptionalBoolValue(val *bool) bool {
+	if val == nil {
+		return false
+	}
+	return *val
+}

@@ -32,6 +32,7 @@ func TestCommitResolver(t *testing.T) {
 		release  = fmt.Sprintf("%v.%v.%v", rand.Intn(3), rand.Intn(50), rand.Intn(100))
 		resource = fake.Word()
 		category = model.Added
+		released = (rand.Float32() < 0.5)
 	)
 
 	r := resolver.CommitResolver{
@@ -42,6 +43,7 @@ func TestCommitResolver(t *testing.T) {
 			Release:  release,
 			Resource: resource,
 			Category: category,
+			Released: released,
 		},
 	}
 
@@ -51,4 +53,5 @@ func TestCommitResolver(t *testing.T) {
 	assert.Equal(t, *r.Release(), release)
 	assert.Equal(t, *r.Resource(), resource)
 	assert.Equal(t, r.Category(), category)
+	assert.Equal(t, r.Released(), released)
 }
