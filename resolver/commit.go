@@ -42,6 +42,11 @@ func (r *CommitResolver) Category() model.Category {
 	return r.Commit.Category
 }
 
+// Released : resolves commit released
+func (r *CommitResolver) Released() bool {
+	return r.Commit.Released
+}
+
 // CreatedAt : resolves commit created_at
 func (r *CommitResolver) CreatedAt() graphql.Time {
 	return graphql.Time{Time: r.Commit.CreatedAt}

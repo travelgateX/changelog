@@ -10,5 +10,6 @@ type Commit struct {
 	Release   string    `json:"release"`
 	Resource  string    `json:"resource"`
 	Category  Category  `json:"category" gorm:"type:varchar(10)"`
+	Released  bool      `json:"released"`
 	CreatedAt time.Time `json:"created_at"`
 }

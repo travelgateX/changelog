@@ -13,6 +13,7 @@ type CreateCommitMutationArgs struct {
 	Release  *string
 	Resource *string
 	Category model.Category
+	Released *bool
 }
 
 // CreateCommit creates new commit in data base
@@ -23,6 +24,7 @@ func (r Resolver) CreateCommit(ctx context.Context, args CreateCommitMutationArg
 		Release:   getOptionalStrValue(args.Release),
 		Resource:  getOptionalStrValue(args.Resource),
 		Category:  args.Category,
+		Released:  getOptionalBoolValue(args.Released),
 		CreatedAt: time.Now(),
 	}
 	r.db.Create(&commit)
