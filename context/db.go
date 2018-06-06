@@ -2,7 +2,6 @@ package context
 
 import (
 	"changelog/config"
-	"changelog/model"
 
 	"github.com/jinzhu/gorm"
 
@@ -19,11 +18,6 @@ func OpenDB(c *config.Config) (*gorm.DB, error) {
 
 	// DB debug mode
 	db.LogMode(c.DebugMode)
-
-	// TODO: develop better migrate database version, that's dangerous
-	// db.DropTable(&model.Commit{})
-	db.AutoMigrate(&model.Commit{})
-
 	return db, nil
 }
 

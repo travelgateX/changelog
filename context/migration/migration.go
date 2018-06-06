@@ -35,11 +35,10 @@ func main() {
 		m201806051541CreateCommitsTable(db),
 	}
 
-	// Migrate all
 	m := gormigrate.New(db, gormigrate.DefaultOptions, allMigrations)
 
 	// Options available
-	// - migrate: run all migrations *default
+	// - migrate: run all migrations **default
 	// - rollback: rollback last migration
 	option := "migrate"
 	if len(os.Args[:1]) > 0 {
@@ -56,6 +55,10 @@ func main() {
 			log.Fatalf("couldnt rollback last migration:%v", err)
 		}
 	}
+
+	// I dont know if its necessary
+	// db.DropTable(&model.Commit{})
+	// db.AutoMigrate(&model.Commit{})
 
 	log.Printf("migration finished successfully")
 }
