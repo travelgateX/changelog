@@ -70,7 +70,7 @@ func MustLoadConfig(path string) *Config {
 
 }
 
-// GetConnString : get database connection string
+// GetDBConnString : get database connection string
 func (c *Config) GetDBConnString() string {
 	return fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
 		c.DBHost, c.DBPort, c.DBUser, c.DBPassword, c.DBName)
