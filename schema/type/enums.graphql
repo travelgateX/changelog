@@ -1,0 +1,29 @@
+# Change type
+enum ChangeType{
+  # Added for new features
+  ADDED
+  # Changed for changes in existing functionality
+  CHANGED
+  # Deprecated for soon-to-be removed features
+  DEPRECATED
+  # Removed for now removed features
+  REMOVED
+  # Fixed for any bug fixes
+  FIXED
+  # Security in case of vulnerabilities
+  SECURITY
+}
+
+# Source platform
+enum SourcePlatform{
+  # Github
+  GITHUB
+  # Gitlab
+  GITLAB
+  # Jira
+  JIRA
+  # Slack
+  SLACK
+  # Other
+  OTHER
+}

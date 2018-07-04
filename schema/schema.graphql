@@ -1,4 +1,5 @@
+# Changelog root schema
 schema {
-    query: Query
-    mutation: Mutation
+  query: Query
+  mutation: Mutation
 }

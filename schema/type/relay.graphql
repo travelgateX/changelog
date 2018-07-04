@@ -1,0 +1,21 @@
+# Node
+interface Node {
+  # A unique identifier
+  code: ID!
+  # Date created
+  createdAt: DateTime!
+  # Date updated
+  updatedAt: DateTime!
+}
+
+# Page info
+type PageInfo {
+  # Has next page?
+  hasNextPage: Boolean!
+  # Has previous page?
+  hasPreviousPage: Boolean!
+  # Start cursor
+  startCursor: String!
+  # End cursor
+  endCursor: String!
+}

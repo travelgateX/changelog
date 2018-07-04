@@ -1,0 +1,9 @@
+# Source of the change
+type Source{
+  # A unique identifier
+  code: ID!
+  # Change platform
+  platform: SourcePlatform!
+  # User that make the changes
+  author: Author 
+}

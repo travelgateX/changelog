@@ -1,0 +1,20 @@
+# Relase version
+type Release implements Node{
+  # A unique identifier
+  code: ID!
+  # Release Data
+  releaseData: ReleaseData!
+  # Date created
+  createdAt: DateTime!
+  # Date updated
+  updatedAt: DateTime!
+}
+
+type ReleaseData{
+  # A unique identifier
+  code: ID!
+  # Release version number (X.Y.Z)
+  version: Version!
+  # Released date
+  releaseDate: DateTime!
+}

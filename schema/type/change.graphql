@@ -1,0 +1,45 @@
+# Notable change for one version of a project
+type Change implements Node{
+  # A unique identifier
+  code: ID!
+  # Change Data
+  changeData: ChangeData!
+  # Date created
+  createdAt: DateTime!
+  # Date updated
+  updatedAt: DateTime!
+}
+
+# Change info
+type ChangeData{
+  # A unique identifier.
+  code: ID!
+  # Commit category [Added, Changed, Deprecated, Removed, Fixed, Security]
+  type: ChangeType!
+  # Descriptive message about the changes commited.
+  message: String!
+  # Release version (unreleased change if not informed)
+  release: Release
+  # Project which changes have been made
+  project: String!
+  # Change date
+  changeDate: DateTime!
+  # Source of the change
+  source: Source!
+}
+
+# Change connection
+type ChangeConnection {
+  # Change edges
+  edges: [ChangeEdge]
+  # Page info
+  pageInfo: PageInfo!
+}
+
+# Change edge
+type ChangeEdge {
+  # Change edge cursor
+  cursor: String!
+  # Change edge node
+  node: Change
+}

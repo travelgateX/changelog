@@ -1,3 +1,5 @@
+# Changelog querys
 type Query {
-    commits(resource: String): [Commit!]
+  # List of changes related to a project
+  changelog(filter:ChangelogFilterInput):ChangeConnection!
 }
