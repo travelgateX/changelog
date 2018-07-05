@@ -8,7 +8,7 @@ import (
 type Source struct {
 	Code     graphql.ID `db:"code_id" gorm:"type:serial"`
 	Platform SourcePlatform
-	Author   Author
+	Author   string
 }
 
 // SourcePlatform : Change type

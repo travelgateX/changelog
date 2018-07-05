@@ -15,7 +15,7 @@ type ReleaseResolver struct {
 
 // Code :
 func (r *ReleaseResolver) Code() graphql.ID {
-	return r.Release.Code
+	return r.Release.ReleaseData.Code
 }
 
 // ReleaseData :
@@ -25,10 +25,10 @@ func (r *ReleaseResolver) ReleaseData() *ReleaseDataResolver {
 
 // CreatedAt :
 func (r *ReleaseResolver) CreatedAt() datetime.DateTime {
-	return r.Release.CreatedAt
+	return r.Release.ReleaseData.CreatedAt
 }
 
 // UpdatedAt :
 func (r *ReleaseResolver) UpdatedAt() datetime.DateTime {
-	return r.Release.UpdatedAt
+	return r.Release.ReleaseData.UpdatedAt
 }

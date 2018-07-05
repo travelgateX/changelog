@@ -19,6 +19,11 @@ func (r *ReleaseDataResolver) Code() graphql.ID {
 	return r.Release.Code
 }
 
+// Name :
+func (r *ReleaseDataResolver) Name() *string {
+	return r.Release.Name
+}
+
 // Version :
 func (r *ReleaseDataResolver) Version() version.Version {
 	return r.Release.Version
@@ -27,4 +32,14 @@ func (r *ReleaseDataResolver) Version() version.Version {
 // ReleaseDate :
 func (r *ReleaseDataResolver) ReleaseDate() datetime.DateTime {
 	return r.Release.ReleaseDate
+}
+
+// CreatedAt :
+func (r *ReleaseDataResolver) CreatedAt() datetime.DateTime {
+	return r.Release.CreatedAt
+}
+
+// UpdatedAt :
+func (r *ReleaseDataResolver) UpdatedAt() datetime.DateTime {
+	return r.Release.UpdatedAt
 }

@@ -1,3 +1,44 @@
+# Changelog mutations
+type Mutation {
+  a:Boolean
+}
+# Changelog querys
+type Query {
+  # List of changes related to a project
+  changelog(filter:ChangelogFilterInput):ChangeConnection!
+}
+# Relase version
+type Release implements Node{
+  # A unique identifier
+  code: ID!
+  # Release Data
+  releaseData: ReleaseData!
+  # Date created
+  createdAt: DateTime!
+  # Date updated
+  updatedAt: DateTime!
+}
+
+type ReleaseData{
+  # A unique identifier
+  code: ID!
+  # Ref name
+  name: String
+  # Release version number (X.Y.Z)
+  version: Version!
+  # Released date
+  releaseDate: DateTime!
+}
+# Time is an RFC3339 timestamp.
+scalar DateTime
+
+# Semantic version https://semver.org/
+scalar Version
+# Changelog root schema
+schema {
+  query: Query
+  mutation: Mutation
+}
 # Notable change for one version of a project
 type Change implements Node{
   # A unique identifier
@@ -28,7 +69,6 @@ type ChangeData{
   source: Source!
 }
 
-
 # Change connection
 type ChangeConnection {
   # Change edges
@@ -43,6 +83,35 @@ type ChangeEdge {
   cursor: String!
   # Change edge node
   node: Change
+}
+# Change type
+enum ChangeType{
+  # Added for new features
+  ADDED
+  # Changed for changes in existing functionality
+  CHANGED
+  # Deprecated for soon-to-be removed features
+  DEPRECATED
+  # Removed for now removed features
+  REMOVED
+  # Fixed for any bug fixes
+  FIXED
+  # Security in case of vulnerabilities
+  SECURITY
+}
+
+# Source platform
+enum SourcePlatform{
+  GITHUB
+  GITLAB
+  JIRA
+  SLACK
+  OTHER
+}
+# Changelog filter input
+input ChangelogFilterInput{
+  # Change type
+  type: ChangeType
 }
 # Node
 interface Node {
@@ -65,11 +134,6 @@ type PageInfo {
   # End cursor
   endCursor: String!
 }
-# Time is an RFC3339 timestamp.
-scalar DateTime
-
-# Semantic version https://semver.org/
-scalar Version
 # Source of the change
 type Source{
   # A unique identifier
@@ -77,92 +141,5 @@ type Source{
   # Change platform
   platform: SourcePlatform!
   # User that make the changes
-  author: Author 
-}
-# Changelog mutations
-type Mutation {
-  a:Boolean
-}
-# Changelog root schema
-schema {
-  query: Query
-  mutation: Mutation
-}
-# Change type
-enum ChangeType{
-  # Added for new features
-  ADDED
-  # Changed for changes in existing functionality
-  CHANGED
-  # Deprecated for soon-to-be removed features
-  DEPRECATED
-  # Removed for now removed features
-  REMOVED
-  # Fixed for any bug fixes
-  FIXED
-  # Security in case of vulnerabilities
-  SECURITY
-}
-
-# Source platform
-enum SourcePlatform{
-  # Github
-  GITHUB
-  # Gitlab
-  GITLAB
-  # Jira
-  JIRA
-  # Slack
-  SLACK
-  # Other
-  OTHER
-}
-# Changelog filter input
-input ChangelogFilterInput{
-  # Change type
-  type: ChangeType
-}
-# Relase version
-type Release implements Node{
-  # A unique identifier
-  code: ID!
-  # Release Data
-  releaseData: ReleaseData!
-  # Date created
-  createdAt: DateTime!
-  # Date updated
-  updatedAt: DateTime!
-}
-
-type ReleaseData{
-  # A unique identifier
-  code: ID!
-  # Release version number (X.Y.Z)
-  version: Version!
-  # Released date
-  releaseDate: DateTime!
-}
-# Changelog querys
-type Query {
-  # List of changes related to a project
-  changelog(filter:ChangelogFilterInput):ChangeConnection!
-}
-# Author node
-type Author implements Node{
-  # A unique identifier
-  code: ID!
-  # Author Data
-  authorData: AuthorData!
-  # Date created
-  createdAt: DateTime!
-  # Date updated
-  updatedAt: DateTime!
-}
-
-# Author info
-type AuthorData{
-  # A unique identifier
-  code: ID!
-  # Author name
-  name: String
+  author: String 
 }

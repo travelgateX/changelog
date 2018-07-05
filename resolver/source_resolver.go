@@ -23,6 +23,6 @@ func (r *SourceResolver) Platform() *model.SourcePlatform {
 }
 
 // Author :
-func (r *SourceResolver) Author() *AuthorResolver {
-	return &AuthorResolver{&r.Source.Author, nil}
+func (r *SourceResolver) Author() *string {
+	return &r.Source.Author
 }

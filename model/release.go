@@ -9,10 +9,7 @@ import (
 
 // Release :
 type Release struct {
-	Code        graphql.ID `db:"code_id" gorm:"type:serial"`
 	ReleaseData *ReleaseData
-	CreatedAt   datetime.DateTime `db:"created_at"`
-	UpdatedAt   datetime.DateTime `db:"updated_at"`
 }
 
 // ReleaseData :

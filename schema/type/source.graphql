@@ -5,5 +5,5 @@ type Source{
   # Change platform
   platform: SourcePlatform!
   # User that make the changes
-  author: Author 
+  author: String 
 }
