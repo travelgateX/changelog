@@ -8,9 +8,10 @@ import (
 
 // Change :
 type Change struct {
-	Code      graphql.ID        `db:"code_id" gorm:"type:serial"`
-	CreatedAt datetime.DateTime `db:"created_at"`
-	UpdatedAt datetime.DateTime `db:"updated_at"`
+	Code       graphql.ID `db:"code_id" gorm:"type:serial"`
+	ChangeData *ChangeData
+	CreatedAt  datetime.DateTime `db:"created_at"`
+	UpdatedAt  datetime.DateTime `db:"updated_at"`
 }
 
 // ChangeData :

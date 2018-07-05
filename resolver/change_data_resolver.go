@@ -24,8 +24,8 @@ func (r *ChangeDataResolver) Message() string {
 }
 
 // Project :
-func (r *ChangeDataResolver) Project() *string {
-	return r.ChangeData.Project
+func (r *ChangeDataResolver) Project() string {
+	return *r.ChangeData.Project
 }
 
 // ChangeDate :
@@ -39,13 +39,13 @@ func (r *ChangeDataResolver) Type() model.ChangeType {
 }
 
 // Release :
-func (r *ChangeDataResolver) Release() model.Release {
-	return r.ChangeData.Release
+func (r *ChangeDataResolver) Release() *ReleaseResolver {
+	return &ReleaseResolver{&r.ChangeData.Release, nil}
 }
 
 // Source :
-func (r *ChangeDataResolver) Source() model.Source {
-	return r.ChangeData.Source
+func (r *ChangeDataResolver) Source() *SourceResolver {
+	return &SourceResolver{&r.ChangeData.Source, nil}
 }
 
 // CreatedAt :

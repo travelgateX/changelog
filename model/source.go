@@ -1,18 +1,14 @@
 package model
 
 import (
-	"changelog/scalars/datetime"
-
 	graphql "github.com/graph-gophers/graphql-go"
 )
 
 // Source :
 type Source struct {
-	Code      graphql.ID        `db:"code_id" gorm:"type:serial"`
-	CreatedAt datetime.DateTime `db:"created_at"`
-	UpdatedAt datetime.DateTime `db:"updated_at"`
-	Author    Author
-	Platform  SourcePlatform
+	Code     graphql.ID `db:"code_id" gorm:"type:serial"`
+	Platform SourcePlatform
+	Author   Author
 }
 
 // SourcePlatform : Change type
