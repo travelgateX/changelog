@@ -16,14 +16,9 @@ enum ChangeType{
 
 # Source platform
 enum SourcePlatform{
-  # Github
   GITHUB
-  # Gitlab
   GITLAB
-  # Jira
   JIRA
-  # Slack
   SLACK
-  # Other
   OTHER
 }

@@ -13,6 +13,8 @@ type Release implements Node{
 type ReleaseData{
   # A unique identifier
   code: ID!
+  # Ref name
+  name: String
   # Release version number (X.Y.Z)
   version: Version!
   # Released date
