@@ -8,10 +8,7 @@ import (
 
 // Author :
 type Author struct {
-	Code       graphql.ID `db:"code_id" gorm:"type:serial"`
 	AuthorData AuthorData
-	CreatedAt  datetime.DateTime `db:"created_at"`
-	UpdatedAt  datetime.DateTime `db:"updated_at"`
 }
 
 // AuthorData :

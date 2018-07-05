@@ -15,7 +15,7 @@ type AuthorResolver struct {
 
 // Code :
 func (r *AuthorResolver) Code() graphql.ID {
-	return r.Author.Code
+	return r.Author.AuthorData.Code
 }
 
 // AuthorData :
@@ -25,10 +25,10 @@ func (r *AuthorResolver) AuthorData() *AuthorDataResolver {
 
 // CreatedAt :
 func (r *AuthorResolver) CreatedAt() datetime.DateTime {
-	return r.Author.CreatedAt
+	return r.Author.AuthorData.CreatedAt
 }
 
 // UpdatedAt :
 func (r *AuthorResolver) UpdatedAt() datetime.DateTime {
-	return r.Author.UpdatedAt
+	return r.Author.AuthorData.UpdatedAt
 }

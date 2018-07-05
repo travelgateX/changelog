@@ -32,7 +32,8 @@ func main() {
 
 	// Fetch all migrations
 	allMigrations := []*gormigrate.Migration{
-		m201806051541CreateCommitsTable(db),
+		m201807041329CreateAuthorTable(db),
+		m201807041524CreateSourceTable(db),
 	}
 
 	m := gormigrate.New(db, gormigrate.DefaultOptions, allMigrations)
