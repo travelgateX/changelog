@@ -5,6 +5,7 @@ import (
 	"changelog/scalars/version"
 
 	graphql "github.com/graph-gophers/graphql-go"
+	"github.com/jinzhu/gorm"
 )
 
 // Release :
@@ -14,10 +15,14 @@ type Release struct {
 
 // ReleaseData :
 type ReleaseData struct {
-	Code        graphql.ID
-	Version     version.Version
-	Name        *string
-	ReleaseDate datetime.DateTime
-	CreatedAt   datetime.DateTime
-	UpdatedAt   datetime.DateTime
+	gorm.Model
+	Code        graphql.ID        `gorm:"type:varchar(100)"`
+	Name        string            `gorm:"type:varchar(255)"`
+	Version     version.Version   `gorm:"type:varchar(255)"`
+	releaseDate datetime.DateTime `gorm:"type:timestamp"`
+}
+
+// TableName :
+func (ReleaseData) TableName() string {
+	return "releases"
 }

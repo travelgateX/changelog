@@ -5,7 +5,7 @@ import (
 	gormigrate "gopkg.in/gormigrate.v1"
 )
 
-// ./context/migration/201806051541_CreateCommitsTable.go
+// ./context/migration/2201807041524_CreateSourceTable.go
 func m201807041524CreateSourceTable(db *gorm.DB) *gormigrate.Migration {
 	m := gormigrate.Migration{
 		ID: "201807041524",

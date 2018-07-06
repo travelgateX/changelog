@@ -33,6 +33,7 @@ func main() {
 	// Fetch all migrations
 	allMigrations := []*gormigrate.Migration{
 		m201807041524CreateSourceTable(db),
+		m201807060954CreateReleaseTable(db),
 	}
 
 	m := gormigrate.New(db, gormigrate.DefaultOptions, allMigrations)
@@ -61,8 +62,10 @@ func main() {
 	// db.AutoMigrate(&model.Commit{})
 
 	// Check compatibility
-	//var source = model.Source{Platform: model.Github, Author: "menganito", Code: "xxxxx"}
-	//db.Create(&source)
+	// var source = model.Source{Platform: model.Github, Author: "menganito", Code: "xxxxx"}
+	// var release = model.ReleaseData{Code: "yyyyy", Name: "captain leopard", Version: "1.0.2b"}
+	// db.Create(&source)
+	// db.Create(&release)
 
 	log.Printf("migration finished successfully")
 }
