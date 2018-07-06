@@ -8,23 +8,23 @@ import (
 
 // Change :
 type Change struct {
-	Code       graphql.ID `db:"code_id" gorm:"type:serial"`
+	Code       graphql.ID
 	ChangeData *ChangeData
-	CreatedAt  datetime.DateTime `db:"created_at"`
-	UpdatedAt  datetime.DateTime `db:"updated_at"`
+	CreatedAt  datetime.DateTime
+	UpdatedAt  datetime.DateTime
 }
 
 // ChangeData :
 type ChangeData struct {
-	Code       graphql.ID        `db:"code_id" gorm:"type:serial"`
-	Message    string            `db:"message"`
-	Project    *string           `db:"project"`
-	ChangeDate datetime.DateTime `db:"change_date"`
-	Type       ChangeType        `db:"change_type"`
+	Code       graphql.ID
+	Message    string
+	Project    *string
+	ChangeDate datetime.DateTime
+	Type       ChangeType
 	Release    Release
 	Source     Source
-	CreatedAt  datetime.DateTime `db:"created_at"`
-	UpdatedAt  datetime.DateTime `db:"updated_at"`
+	CreatedAt  datetime.DateTime
+	UpdatedAt  datetime.DateTime
 }
 
 // ChangeType : Change type

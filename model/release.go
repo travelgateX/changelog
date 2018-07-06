@@ -14,10 +14,10 @@ type Release struct {
 
 // ReleaseData :
 type ReleaseData struct {
-	Code        graphql.ID        `db:"code_id" gorm:"type:serial"`
-	Version     version.Version   `db:"version"`
-	Name        *string           `db:"name"`
-	ReleaseDate datetime.DateTime `db:"release_date"`
-	CreatedAt   datetime.DateTime `db:"created_at"`
-	UpdatedAt   datetime.DateTime `db:"updated_at"`
+	Code        graphql.ID
+	Version     version.Version
+	Name        *string
+	ReleaseDate datetime.DateTime
+	CreatedAt   datetime.DateTime
+	UpdatedAt   datetime.DateTime
 }

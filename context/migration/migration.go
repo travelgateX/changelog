@@ -32,7 +32,6 @@ func main() {
 
 	// Fetch all migrations
 	allMigrations := []*gormigrate.Migration{
-		m201807041329CreateAuthorTable(db),
 		m201807041524CreateSourceTable(db),
 	}
 
@@ -60,6 +59,10 @@ func main() {
 	// I dont know if its necessary
 	// db.DropTable(&model.Commit{})
 	// db.AutoMigrate(&model.Commit{})
+
+	// Check compatibility
+	//var source = model.Source{Platform: model.Github, Author: "menganito", Code: "xxxxx"}
+	//db.Create(&source)
 
 	log.Printf("migration finished successfully")
 }

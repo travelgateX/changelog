@@ -2,11 +2,13 @@ package model
 
 import (
 	graphql "github.com/graph-gophers/graphql-go"
+	"github.com/jinzhu/gorm"
 )
 
 // Source :
 type Source struct {
-	Code     graphql.ID `db:"code_id" gorm:"type:serial"`
+	gorm.Model
+	Code     graphql.ID
 	Platform SourcePlatform
 	Author   string
 }

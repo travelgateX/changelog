@@ -1,22 +1,17 @@
 package main
 
 import (
-	"changelog/scalars/datetime"
+	graphql "github.com/graph-gophers/graphql-go"
+	"github.com/jinzhu/gorm"
 )
 
-// Author :
-type Author struct {
-	ID        uint              `gorm:"type:serial"`
-	Name      string            `gorm:"type: varchar(255)"`
-	CreatedAt datetime.DateTime `gorm:"type:timestamp"`
-	UpdatedAt datetime.DateTime `gorm:"type:timestamp"`
-}
+// Platform :
+type Platform string
 
 // Source :
 type Source struct {
-	ID        uint   `gorm:"type:serial"`
-	Platform  string `gorm:"type:varchar(20)"`
-	AuthorID  uint
-	CreatedAt datetime.DateTime `gorm:"type:timestamp"`
-	UpdatedAt datetime.DateTime `gorm:"type:timestamp"`
+	gorm.Model
+	Code     graphql.ID `gorm:"type:varchar(100)"`
+	Platform Platform   `gorm:"type:varchar(20)"`
+	Author   string     `gorm:"type:varchar(255)"`
 }
