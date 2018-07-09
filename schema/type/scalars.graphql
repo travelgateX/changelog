@@ -1,2 +1,5 @@
+# Time is an RFC3339 timestamp.
+scalar Time
+
 # Semantic version https://semver.org/
 scalar Version

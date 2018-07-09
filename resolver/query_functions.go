@@ -2,38 +2,26 @@ package resolver
 
 import (
 	"changelog/model"
+	"changelog/relay"
 	"context"
 )
 
-// ChangelogInput : commits request
-type ChangelogInput struct {
-	Filter *ChangelogFilterInput
-}
-
-// ChangelogFilterInput :
-type ChangelogFilterInput struct {
-	Type *model.ChangeType
-}
-
 // Changelog resolves a list of changes
-func (r *Resolver) Changelog(ctx context.Context, args *ChangelogInput) (*ChangeConnectionResolver, error) {
-	//var commits []model.Commit
+func (r *Resolver) Changelog(ctx context.Context, args relay.Filters) (*ChangeConnectionResolver, error) {
+	var changes []*model.ChangeData
 
-	// TODO: resolver going directly to data base... new layer here?
-	//r.db.Find(&commits)
+	r.db.Find(&changes)
+	changesInterface := changesToSliceInterface(changes)
+	filterArgs := relay.NewConnectionArguments(args.Filters())
+	conn := relay.ConnectionFromArray(changesInterface, filterArgs)
 
-	// TODO: load resolvers, handle errors
-	//var resolvers = make([]*CommitResolver, 0, len(commits))
-	//for _, commit := range commits {
-	//	resolver := &CommitResolver{Commit: commit}
-	//	resolvers = append(resolvers, resolver)
-	//}
+	return &ChangeConnectionResolver{db: r.db, conn: conn}, nil
+}
 
-	var c model.ChangeData
-	c.Code = "blas"
-
-	var res []*ChangeResolver
-	res[0] = &ChangeResolver{Change: &c}
-
-	return &ChangeConnectionResolver{nil, nil}, nil
+func changesToSliceInterface(changes []*model.ChangeData) []interface{} {
+	iFace := []interface{}{}
+	for _, todo := range changes {
+		iFace = append(iFace, todo)
+	}
+	return iFace
 }

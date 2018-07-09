@@ -3,7 +3,6 @@ package resolver
 import (
 	"changelog/model"
 	"changelog/scalars/version"
-	"time"
 
 	graphql "github.com/graph-gophers/graphql-go"
 )
@@ -21,7 +20,7 @@ func (r *ReleaseDataResolver) Code() graphql.ID {
 
 // Name :
 func (r *ReleaseDataResolver) Name() *string {
-	return r.Release.Name
+	return &r.Release.Name
 }
 
 // Version :
@@ -30,16 +29,16 @@ func (r *ReleaseDataResolver) Version() version.Version {
 }
 
 // ReleaseDate :
-func (r *ReleaseDataResolver) ReleaseDate() time.Time {
-	return r.Release.ReleaseDate
+func (r *ReleaseDataResolver) ReleaseDate() graphql.Time {
+	return graphql.Time{Time: r.Release.ReleaseDate}
 }
 
 // CreatedAt :
-func (r *ReleaseDataResolver) CreatedAt() time.Time {
-	return r.Release.CreatedAt
+func (r *ReleaseDataResolver) CreatedAt() graphql.Time {
+	return graphql.Time{Time: r.Release.CreatedAt}
 }
 
 // UpdatedAt :
-func (r *ReleaseDataResolver) UpdatedAt() time.Time {
-	return r.Release.UpdatedAt
+func (r *ReleaseDataResolver) UpdatedAt() graphql.Time {
+	return graphql.Time{Time: r.Release.UpdatedAt}
 }

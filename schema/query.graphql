@@ -1,5 +1,5 @@
 # Changelog querys
 type Query {
   # List of changes related to a project
-  changelog(filter:ChangelogFilterInput):ChangeConnection!
+  changelog(type:String, first: Int, last: Int, before: String, after:String):ChangeConnection!
 }

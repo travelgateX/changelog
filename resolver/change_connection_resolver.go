@@ -3,34 +3,36 @@ package resolver
 import (
 	"changelog/model"
 	"changelog/relay"
+
+	"github.com/jinzhu/gorm"
 )
 
 // ChangeConnectionResolver :
 type ChangeConnectionResolver struct {
-	Connection *relay.Connection
-	Error      *[]*model.Error
+	db   *gorm.DB
+	conn *relay.Connection
+	err  *[]*model.Error
 }
 
 // PageInfo :
 func (r *ChangeConnectionResolver) PageInfo() *PageInfoResolver {
-	if r.Error == nil {
-		return &PageInfoResolver{&r.Connection.PageInfo}
+	if r.err == nil {
+		return &PageInfoResolver{&r.conn.PageInfo}
 	}
 	return &PageInfoResolver{nil}
 }
 
 // Edges :
 func (r *ChangeConnectionResolver) Edges() *[]*ChangeEdgeResolver {
-
-	if r.Error != nil {
+	if r.err != nil {
 		resolvers := make([]*ChangeEdgeResolver, 0, 1)
-		resolvers = append(resolvers, &ChangeEdgeResolver{nil, r.Error})
+		resolvers = append(resolvers, &ChangeEdgeResolver{db: r.db, edge: nil, err: r.err})
 		return &resolvers
 	}
 
-	resolvers := make([]*ChangeEdgeResolver, 0, len(r.Connection.Edges))
-	for i := range r.Connection.Edges {
-		resolvers = append(resolvers, &ChangeEdgeResolver{r.Connection.Edges[i], nil})
+	resolvers := make([]*ChangeEdgeResolver, 0, len(r.conn.Edges))
+	for i := range r.conn.Edges {
+		resolvers = append(resolvers, &ChangeEdgeResolver{db: r.db, edge: r.conn.Edges[i], err: nil})
 	}
 	return &resolvers
 }

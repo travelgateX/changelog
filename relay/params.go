@@ -6,7 +6,7 @@ type Filters struct {
 	Last   *int32
 	Before *string
 	After  *string
-	Codes  *[]string
+	Type   *string
 }
 
 // Filters :
@@ -23,6 +23,9 @@ func (r *Filters) Filters() map[string]interface{} {
 	}
 	if r.After != nil {
 		filters["after"] = *r.After
+	}
+	if r.Type != nil {
+		filters["type"] = *r.Type
 	}
 	return filters
 }

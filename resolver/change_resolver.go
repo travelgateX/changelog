@@ -2,33 +2,32 @@ package resolver
 
 import (
 	"changelog/model"
-	"time"
 
 	graphql "github.com/graph-gophers/graphql-go"
 )
 
 // ChangeResolver :
 type ChangeResolver struct {
-	Change *model.ChangeData
-	Error  *model.Error
+	change *model.ChangeData
+	err    *[]*model.Error
 }
 
 // Code :
 func (r *ChangeResolver) Code() graphql.ID {
-	return r.Change.Code
+	return r.change.Code
 }
 
 // ChangeData :
 func (r *ChangeResolver) ChangeData() *ChangeDataResolver {
-	return &ChangeDataResolver{r.Change, r.Error}
+	return &ChangeDataResolver{changeData: r.change, err: r.err}
 }
 
 // CreatedAt :
-func (r *ChangeResolver) CreatedAt() time.Time {
-	return r.Change.CreatedAt
+func (r *ChangeResolver) CreatedAt() graphql.Time {
+	return graphql.Time{Time: r.change.CreatedAt}
 }
 
 // UpdatedAt :
-func (r *ChangeResolver) UpdatedAt() time.Time {
-	return r.Change.UpdatedAt
+func (r *ChangeResolver) UpdatedAt() graphql.Time {
+	return graphql.Time{Time: r.change.UpdatedAt}
 }

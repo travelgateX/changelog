@@ -8,21 +8,21 @@ import (
 
 // SourceResolver :
 type SourceResolver struct {
-	Source *model.Source
-	Error  *model.Error
+	source *model.Source
+	err    *model.Error
 }
 
 // Code :
 func (r *SourceResolver) Code() graphql.ID {
-	return r.Source.Code
+	return r.source.Code
 }
 
 // Platform :
 func (r *SourceResolver) Platform() *model.SourcePlatform {
-	return &r.Source.Platform
+	return &r.source.Platform
 }
 
 // Author :
 func (r *SourceResolver) Author() *string {
-	return &r.Source.Author
+	return &r.source.Author
 }
