@@ -1,30 +1,27 @@
 package model
 
 import (
-	"changelog/scalars/datetime"
+	"time"
 
 	graphql "github.com/graph-gophers/graphql-go"
+	"github.com/jinzhu/gorm"
 )
 
 // Change :
 type Change struct {
-	Code       graphql.ID
 	ChangeData *ChangeData
-	CreatedAt  datetime.DateTime
-	UpdatedAt  datetime.DateTime
 }
 
 // ChangeData :
 type ChangeData struct {
+	gorm.Model
 	Code       graphql.ID
 	Message    string
 	Project    *string
-	ChangeDate datetime.DateTime
+	ChangeDate time.Time
 	Type       ChangeType
-	Release    Release
-	Source     Source
-	CreatedAt  datetime.DateTime
-	UpdatedAt  datetime.DateTime
+	ReleaseID  uint
+	SourceID   uint
 }
 
 // ChangeType : Change type
@@ -39,3 +36,13 @@ const (
 	Fixed      = ChangeType("FIXED")
 	Security   = ChangeType("SECURITY")
 )
+
+// TableName :
+func (ChangeData) TableName() string {
+	return "changes"
+}
+
+// ChangeObject :
+func (r ChangeData) ChangeObject() *Change {
+	return &Change{ChangeData: &r}
+}

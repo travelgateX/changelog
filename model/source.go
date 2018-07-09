@@ -11,6 +11,7 @@ type Source struct {
 	Code     graphql.ID
 	Platform SourcePlatform
 	Author   string
+	Changes  []Change
 }
 
 // SourcePlatform : Change type

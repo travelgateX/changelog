@@ -3,9 +3,9 @@ interface Node {
   # A unique identifier
   code: ID!
   # Date created
-  createdAt: DateTime!
+  createdAt: Time!
   # Date updated
-  updatedAt: DateTime!
+  updatedAt: Time!
 }
 
 # Page info

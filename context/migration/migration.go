@@ -34,6 +34,7 @@ func main() {
 	allMigrations := []*gormigrate.Migration{
 		m201807041524CreateSourceTable(db),
 		m201807060954CreateReleaseTable(db),
+		m201807061219CreateChangeTable(db),
 	}
 
 	m := gormigrate.New(db, gormigrate.DefaultOptions, allMigrations)
@@ -56,16 +57,5 @@ func main() {
 			log.Fatalf("couldnt rollback last migration:%v", err)
 		}
 	}
-
-	// I dont know if its necessary
-	// db.DropTable(&model.Commit{})
-	// db.AutoMigrate(&model.Commit{})
-
-	// Check compatibility
-	// var source = model.Source{Platform: model.Github, Author: "menganito", Code: "xxxxx"}
-	// var release = model.ReleaseData{Code: "yyyyy", Name: "captain leopard", Version: "1.0.2b"}
-	// db.Create(&source)
-	// db.Create(&release)
-
 	log.Printf("migration finished successfully")
 }

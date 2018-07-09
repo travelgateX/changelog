@@ -2,7 +2,7 @@ package resolver
 
 import (
 	"changelog/model"
-	"changelog/scalars/datetime"
+	"time"
 
 	graphql "github.com/graph-gophers/graphql-go"
 )
@@ -29,7 +29,7 @@ func (r *ChangeDataResolver) Project() string {
 }
 
 // ChangeDate :
-func (r *ChangeDataResolver) ChangeDate() datetime.DateTime {
+func (r *ChangeDataResolver) ChangeDate() time.Time {
 	return r.ChangeData.ChangeDate
 }
 
@@ -49,11 +49,11 @@ func (r *ChangeDataResolver) Source() *SourceResolver {
 }
 
 // CreatedAt :
-func (r *ChangeDataResolver) CreatedAt() datetime.DateTime {
+func (r *ChangeDataResolver) CreatedAt() time.Time {
 	return r.ChangeData.CreatedAt
 }
 
 // UpdatedAt :
-func (r *ChangeDataResolver) UpdatedAt() datetime.DateTime {
+func (r *ChangeDataResolver) UpdatedAt() time.Time {
 	return r.ChangeData.UpdatedAt
 }

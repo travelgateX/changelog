@@ -5,9 +5,9 @@ type Release implements Node{
   # Release Data
   releaseData: ReleaseData!
   # Date created
-  createdAt: DateTime!
+  createdAt: Time!
   # Date updated
-  updatedAt: DateTime!
+  updatedAt: Time!
 }
 
 type ReleaseData{
@@ -18,5 +18,5 @@ type ReleaseData{
   # Release version number (X.Y.Z)
   version: Version!
   # Released date
-  releaseDate: DateTime!
+  releaseDate: Time!
 }

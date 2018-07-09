@@ -5,9 +5,9 @@ type Change implements Node{
   # Change Data
   changeData: ChangeData!
   # Date created
-  createdAt: DateTime!
+  createdAt: Time!
   # Date updated
-  updatedAt: DateTime!
+  updatedAt: Time!
 }
 
 # Change info
@@ -23,7 +23,7 @@ type ChangeData{
   # Project which changes have been made
   project: String!
   # Change date
-  changeDate: DateTime!
+  changeDate: Time!
   # Source of the change
   source: Source!
 }
