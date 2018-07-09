@@ -18,8 +18,8 @@ func (r *SourceResolver) Code() graphql.ID {
 }
 
 // Platform :
-func (r *SourceResolver) Platform() *model.SourcePlatform {
-	return &r.source.Platform
+func (r *SourceResolver) Platform() model.SourcePlatform {
+	return r.source.Platform
 }
 
 // Author :
