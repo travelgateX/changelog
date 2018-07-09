@@ -49,7 +49,7 @@ func (r *ChangeDataResolver) Release() *ReleaseResolver {
 // Source :
 func (r *ChangeDataResolver) Source() *SourceResolver {
 	var source model.Source
-	r.db.Find(&source, &r.changeData.SourceID)
+	r.db.First(&source, r.changeData.SourceID)
 	return &SourceResolver{source: &source, err: nil}
 }
 

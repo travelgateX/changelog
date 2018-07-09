@@ -26,7 +26,7 @@ func (r *ChangeEdgeResolver) Cursor() string {
 func (r *ChangeEdgeResolver) Node() *ChangeResolver {
 	if r.err == nil {
 		x := r.edge.Node.(*model.ChangeData)
-		return &ChangeResolver{change: x, err: nil}
+		return &ChangeResolver{db: r.db, change: x, err: nil}
 	}
-	return &ChangeResolver{change: nil, err: r.err}
+	return &ChangeResolver{db: r.db, change: nil, err: r.err}
 }

@@ -4,10 +4,12 @@ import (
 	"changelog/model"
 
 	graphql "github.com/graph-gophers/graphql-go"
+	"github.com/jinzhu/gorm"
 )
 
 // ChangeResolver :
 type ChangeResolver struct {
+	db     *gorm.DB
 	change *model.ChangeData
 	err    *[]*model.Error
 }
@@ -19,7 +21,7 @@ func (r *ChangeResolver) Code() graphql.ID {
 
 // ChangeData :
 func (r *ChangeResolver) ChangeData() *ChangeDataResolver {
-	return &ChangeDataResolver{changeData: r.change, err: r.err}
+	return &ChangeDataResolver{db: r.db, changeData: r.change, err: r.err}
 }
 
 // CreatedAt :
