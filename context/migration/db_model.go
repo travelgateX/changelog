@@ -41,8 +41,6 @@ type Change struct {
 	Project    *string          `gorm:"type:varchar(50)"`
 	ChangeDate time.Time        `gorm:"type:timestamp"`
 	Type       model.ChangeType `gorm:"type:varchar(20)"`
-	Relase     model.Release    `gorm:"foreignkey:ReleaseID"`
-	Source     model.Source     `gorm:"foreignkey:SourceID"`
 	ReleaseID  uint
 	SourceID   uint
 }
