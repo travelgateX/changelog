@@ -41,9 +41,9 @@ func (r *ChangeDataResolver) Type() model.ChangeType {
 
 // Release :
 func (r *ChangeDataResolver) Release() *ReleaseResolver {
-	var release model.Release
-	r.db.Find(&release, &r.changeData.ReleaseID)
-	return &ReleaseResolver{release: &release, err: nil}
+	var releaseData model.ReleaseData
+	r.db.First(&releaseData, r.changeData.ReleaseID)
+	return &ReleaseResolver{release: releaseData.ReleaseObject(), err: nil}
 }
 
 // Source :
