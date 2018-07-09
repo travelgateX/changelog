@@ -1,3 +1,5 @@
+# Changelog querys
 type Query {
-    commits(resource: String): [Commit!]
+  # List of changes related to a project
+  changelog(type:String, first: Int, last: Int, before: String, after:String):ChangeConnection!
 }

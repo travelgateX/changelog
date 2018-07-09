@@ -1,3 +1,4 @@
+# Changelog mutations
 type Mutation {
-    createCommit(message: String!, user: String, release: String, resource: String, category: Category!, released: Boolean): Commit
+  a:Boolean
 }

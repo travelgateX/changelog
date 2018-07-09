@@ -1,0 +1,5 @@
+# Changelog filter input
+input ChangelogFilterInput{
+  # Change type
+  type: ChangeType
+}

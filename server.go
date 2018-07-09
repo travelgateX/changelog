@@ -38,7 +38,7 @@ func main() {
 
 	// Parse graphql schema
 	if sch, err = graphql.ParseSchema(schema.String(c.DebugMode), resolver.NewRoot(db)); err != nil {
-		log.Fatalf("fatal error, cant parse graphql schema. %v", err)
+		log.Fatalf("fatal error, cant parse graphql schema. %+v", err)
 	}
 
 	// Attach parsed schema to handler.
