@@ -1,0 +1,7 @@
+# Hello World type
+type Hellow{
+    # A unique indentifier.
+    code: ID!
+    # Hello World message
+    helloWorld: String!
+} 

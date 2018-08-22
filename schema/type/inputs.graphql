@@ -3,3 +3,9 @@ input ChangelogFilterInput{
   # Change type
   type: ChangeType
 }
+input CreateChangeInput{
+  code: String
+  message: String!
+  project: String!
+  type: ChangeType!
+}
