@@ -1,4 +1,5 @@
 # Changelog mutations
 type Mutation {
   createChange(input:CreateChangeInput):Change!
+  updateChange(input:UpdateChangeInput):Change!
 }

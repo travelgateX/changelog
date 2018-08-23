@@ -9,3 +9,9 @@ input CreateChangeInput{
   project: String!
   type: ChangeType!
 }
+input UpdateChangeInput{
+  code: String!
+  message: String!
+  project: String!
+  type: ChangeType!
+}
