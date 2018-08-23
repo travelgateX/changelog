@@ -2,6 +2,7 @@ package resolver
 
 import (
 	"changelog/model"
+	"fmt"
 	"time"
 
 	graphql "github.com/graph-gophers/graphql-go"
@@ -20,9 +21,8 @@ func (r *Resolver) CreateChange(args struct{ Input *model.CreateChangeInput }) *
 		ReleaseID:  1,
 		SourceID:   2,
 	}
-	r.db.Save(&c)
-	return &ChangeResolver{
-		change: &c,
-		err:    nil,
-	}
+	fmt.Println("Intentando crear dato en BBDD")
+	r.db.Create(&c)
+	fmt.Println("Dato supuestamente creado")
+	return &ChangeResolver{change: &c, err: nil}
 }
