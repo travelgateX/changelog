@@ -2,4 +2,5 @@
 type Mutation {
   createChange(input:CreateChangeInput):Change!
   updateChange(input:UpdateChangeInput):Change!
+  deleteChange(input:DeleteChangeInput):Change!
 }

@@ -15,3 +15,6 @@ input UpdateChangeInput{
   project: String!
   type: ChangeType!
 }
+input DeleteChangeInput{
+  code: String!
+}

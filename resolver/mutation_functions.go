@@ -39,3 +39,15 @@ func (r *Resolver) UpdateChange(args struct{ Input *model.UpdateChangeInput }) *
 		Type:       args.Input.Type})
 	return &ChangeResolver{change: &c, err: nil}
 }
+
+// DeleteChange :
+func (r *Resolver) DeleteChange(args struct{ Input *model.DeleteChangeInput }) *ChangeResolver {
+
+	c := model.ChangeData{
+		Code: graphql.ID(args.Input.Code),
+	}
+
+	// Get all matched records
+	r.db.Where("code = ?", args.Input.Code).Delete(c)
+	return &ChangeResolver{change: &c, err: nil}
+}
