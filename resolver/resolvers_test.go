@@ -1,16 +1,10 @@
-package resolvers_test
+package resolver
 
 import (
 	"changelog/model"
-	"changelog/resolver"
-
-	"fmt"
-	"math/rand"
 	"testing"
 
-	graphql "github.com/graph-gophers/graphql-go"
 	"github.com/icrowley/fake"
-	"github.com/stretchr/testify/assert"
 )
 
 func TestRootResolver(t *testing.T) {
@@ -21,10 +15,11 @@ func TestQueryResolver(t *testing.T) {
 }
 
 func TestMutationResolver(t *testing.T) {
+
 	t.Skip("Skipping test root resolver without mocked database")
 }
 
-func TestCommitResolver(t *testing.T) {
+/*func TestCommitResolver(t *testing.T) {
 	var (
 		id       = int32(rand.Intn(1000))
 		message  = fake.Paragraph()
@@ -35,8 +30,8 @@ func TestCommitResolver(t *testing.T) {
 		released = (rand.Float32() < 0.5)
 	)
 
-	r := resolver.CommitResolver{
-		Commit: model.Commit{
+	r := resolver.{
+		Commit: Resolver.Change{
 			ID:       id,
 			Message:  message,
 			User:     user,
@@ -54,4 +49,30 @@ func TestCommitResolver(t *testing.T) {
 	assert.Equal(t, *r.Resource(), resource)
 	assert.Equal(t, r.Category(), category)
 	assert.Equal(t, r.Released(), released)
+}*/
+func TestCreateChangeResolver(t *testing.T) {
+
+	var (
+		code    = "testCode"
+		message = fake.Paragraph()
+		project = fake.Paragraph()
+		typo    = "ADDED"
+	)
+
+	r := model.CreateChangeInput{
+		Code:    &code,
+		Message: message,
+		Project: project,
+		Type:    model.ChangeType(typo),
+	}
+
+	if *r.Code != code {
+		t.Errorf("ERROR: with code: %s", code)
+	} else if r.Message != message {
+		t.Errorf("ERROR: with message: %s", message)
+	} else if r.Project != project {
+		t.Errorf("ERRPR: with project: %s", project)
+	} else if r.Type != model.ChangeType(typo) {
+		t.Errorf("ERROR: with tpye: %s", typo)
+	}
 }
