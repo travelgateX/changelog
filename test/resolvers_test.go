@@ -1,7 +1,8 @@
-package resolver
+package test
 
 import (
 	"changelog/model"
+	"changelog/resolver"
 	"testing"
 
 	"github.com/icrowley/fake"
@@ -76,3 +77,39 @@ func TestCreateChangeResolver(t *testing.T) {
 		t.Errorf("ERROR: with tpye: %s", typo)
 	}
 }
+
+func TestUpdateChange(t *testing.T) {
+	data := model.UpdateChangeInput{
+		Code:    "ch2",
+		Message: "messageTest",
+		Project: "projectTest",
+		Type:    model.ChangeType("FIXED"),
+	}
+
+	var r resolver.Resolver
+
+	//resolver := resolver{}
+
+	inputData := struct{ Input *model.UpdateChangeInput }{&data}
+	cResovler := *r.UpdateChange(inputData)
+
+	if data.Code != string(cResovler.Code()) {
+		t.Errorf("ERROR: with code: %s", data.Code)
+	}
+
+}
+
+/*func TestDeleteChange(t *testing.T) {
+	data := model.DeleteChangeInput{
+		Code: "ch2",
+	}
+	inputData := struct{ Input *model.DeleteChangeInput }{&data}
+
+	var r resolver.Resolver
+	cResolver := *r.DeleteChange(inputData)
+
+	if data.Code == string(cResolver.Code()) {
+		t.Errorf("ERROR: with code: %s", data.Code)
+	}
+
+}*/

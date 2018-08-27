@@ -2,6 +2,10 @@ package resolver
 
 import (
 	"github.com/jinzhu/gorm"
+	"github.com/onsi/ginkgo"
+
+	// Me cago en san blas
+	_ "github.com/onsi/gomega"
 )
 
 // Resolver : root resolver
@@ -11,6 +15,10 @@ type Resolver struct {
 
 // NewRoot : generates query root entry point
 func NewRoot(db *gorm.DB) *Resolver {
+	var _ = ginkgo.Describe("Resolver", func() {
+
+	})
+
 	return &Resolver{db: db}
 }
 

@@ -29,14 +29,13 @@ func (r *Resolver) UpdateChange(args struct{ Input *model.UpdateChangeInput }) *
 
 	t := time.Now()
 	c := model.ChangeData{
-		Code: graphql.ID(args.Input.Code),
-	}
-
-	r.db.Model(&c).Updates(model.ChangeData{
+		Code:       graphql.ID(args.Input.Code),
 		Message:    args.Input.Message,
 		Project:    &args.Input.Project,
 		ChangeDate: t,
-		Type:       args.Input.Type})
+		Type:       args.Input.Type,
+	}
+
 	return &ChangeResolver{change: &c, err: nil}
 }
 
