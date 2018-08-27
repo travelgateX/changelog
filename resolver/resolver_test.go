@@ -18,8 +18,7 @@ var _ = Describe("Resolver", func() {
 
 		UpdateData model.UpdateChangeInput
 		CreateData model.CreateChangeInput
-		cResolver  *Resolver
-		result     *ChangeResolver
+		cResolver  Resolver
 	)
 
 	BeforeEach(func() {
@@ -51,7 +50,7 @@ var _ = Describe("Resolver", func() {
 			It("should have the same values in DB after the UpdateChange function", func() {
 				//UpdateChange
 				s := struct{ Input *model.UpdateChangeInput }{&UpdateData}
-				result = cResolver.UpdateChange(s)
+				result := *cResolver.UpdateChange(s)
 				Expect(result.ChangeData().Code()).To(Equal(graphql.ID(UpdateData.Code)))
 			})
 		})
@@ -61,7 +60,7 @@ var _ = Describe("Resolver", func() {
 		Context("adding data from a manually created node", func() {
 			It("should have the following values: Code: ch8\n Message: messageTest\n Project: projectTest\n Type: FIXED after retrieving it form the DB", func() {
 				s := struct{ Input *model.CreateChangeInput }{&CreateData}
-				result = cResolver.CreateChange(s)
+				result := *cResolver.CreateChange(s)
 				Expect(result.ChangeData().Code()).To(Equal(graphql.ID(*CreateData.Code)))
 			})
 		})
