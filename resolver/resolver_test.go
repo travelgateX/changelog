@@ -15,38 +15,56 @@ var _ = Describe("Resolver", func() {
 
 	var (
 		// Variable declaration
-		data      model.UpdateChangeInput
-		cResolver *Resolver
-		result    *ChangeResolver
+
+		UpdateData model.UpdateChangeInput
+		CreateData model.CreateChangeInput
+		cResolver  *Resolver
+		result     *ChangeResolver
 	)
-	type inputData struct {
-		Input *model.UpdateChangeInput
-	}
 
 	BeforeEach(func() {
 		// TODO:
 		// Set up state for specs.
-	})
-	It("data", func() {
-		// Set up a single spec.
-		data = model.UpdateChangeInput{
+		UpdateData = model.UpdateChangeInput{
 			Code:    "ch2",
 			Message: "messageTest",
 			Project: "projectTest",
-			Type:    model.ChangeType("FIXED"),
+			Type:    model.ChangeType("CHANGED"),
 		}
+
+		newCode := "ch7"
+		CreateData = model.CreateChangeInput{
+			Code:    &newCode,
+			Message: "newMessage",
+			Project: "newProject",
+			Type:    model.ChangeType("ADDED"),
+		}
+	})
+	It("data", func() {
+		// Set up a singel spec
 	})
 
 	// Example
 
-	Describe("Updating an existing change with new data", func() {
+	Describe("Updating an existing change with new data. ", func() {
 		Context("Modifing data from a manually created change", func() {
 			It("should have the same values in DB after the UpdateChange function", func() {
 				//UpdateChange
-				s := inputData{Input: &data}
+				s := struct{ Input *model.UpdateChangeInput }{&UpdateData}
 				result = cResolver.UpdateChange(s)
-				Expect(result.ChangeData().Code()).To(Equal(graphql.ID(data.Code)))
+				Expect(result.ChangeData().Code()).To(Equal(graphql.ID(UpdateData.Code)))
 			})
 		})
 	})
+
+	Describe("Creating a new change", func() {
+		Context("adding data from a manually created node", func() {
+			It("should have the following values: Code: ch8\n Message: messageTest\n Project: projectTest\n Type: FIXED after retrieving it form the DB", func() {
+				s := struct{ Input *model.CreateChangeInput }{&CreateData}
+				result = cResolver.CreateChange(s)
+				Expect(result.ChangeData().Code()).To(Equal(graphql.ID(*CreateData.Code)))
+			})
+		})
+	})
+
 })

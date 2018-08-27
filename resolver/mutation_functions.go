@@ -36,6 +36,12 @@ func (r *Resolver) UpdateChange(args struct{ Input *model.UpdateChangeInput }) *
 		Type:       args.Input.Type,
 	}
 
+	r.db.Model(&c).Updates(model.ChangeData{
+		Message:    args.Input.Message,
+		Project:    &args.Input.Project,
+		ChangeDate: t,
+		Type:       args.Input.Type})
+
 	return &ChangeResolver{change: &c, err: nil}
 }
 
