@@ -5,23 +5,36 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
+	"changelog/config"
+	"changelog/context"
 	"changelog/model"
-	. "changelog/resolver"
+	"changelog/resolver"
 )
 
 // The var _= ... trick allows to evaluate the Describe at the top level
 // without having to wrap it in a  func init() {}
 var _ = Describe("Resolver", func() {
-
 	var (
 		// Variable declaration
-
 		UpdateData model.UpdateChangeInput
 		CreateData model.CreateChangeInput
-		cResolver  Resolver
+		cResolver  resolver.Resolver
 	)
 
 	BeforeEach(func() {
+		// Load Config & DB
+		c, err1 := config.LoadConfig("./../config")
+		Expect(err1).NotTo(HaveOccurred())
+
+		db, err2 := context.OpenDB(c)
+		Expect(err2).NotTo(HaveOccurred())
+
+		err3 := db.DB().Ping()
+		Expect(err3).NotTo(HaveOccurred())
+
+		// Resolver.resolver init
+		cResolver = *resolver.NewRoot(db)
+
 		// TODO:
 		// Set up state for specs.
 		UpdateData = model.UpdateChangeInput{
@@ -39,6 +52,7 @@ var _ = Describe("Resolver", func() {
 			Type:    model.ChangeType("ADDED"),
 		}
 	})
+
 	It("data", func() {
 		// Set up a singel spec
 	})
@@ -65,5 +79,4 @@ var _ = Describe("Resolver", func() {
 			})
 		})
 	})
-
 })
