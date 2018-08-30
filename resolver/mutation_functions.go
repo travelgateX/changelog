@@ -2,6 +2,7 @@ package resolver
 
 import (
 	"changelog/model"
+	"fmt"
 	"time"
 
 	graphql "github.com/graph-gophers/graphql-go"
@@ -10,24 +11,49 @@ import (
 // CreateChange :
 func (r *Resolver) CreateChange(args struct{ Input *model.CreateChangeInput }) *ChangeResolver {
 
-	t := time.Now()
-	c := model.ChangeData{
+	var inputCode model.ChangeData
+	r.db.First(&inputCode, "code = ?", args.Input.Code)
+	if inputCode.Code != "" {
+		inputError := model.Error{
+			Code:        *args.Input.Code,
+			Description: "ERROR: This change is already stored",
+		}
+		err := []*model.Error{}
+		err = append(err, &inputError)
+
+		return &ChangeResolver{change: &inputCode, err: &err}
+	}
+
+	time := time.Now()
+	inputData := model.ChangeData{
 		Code:       graphql.ID(*args.Input.Code),
 		Message:    args.Input.Message,
 		Project:    &args.Input.Project,
-		ChangeDate: t,
+		ChangeDate: time,
 		Type:       args.Input.Type,
 		ReleaseID:  1,
 		SourceID:   2,
 	}
-	r.db.Create(&c)
-	return &ChangeResolver{change: &c, err: nil}
+	r.db.Create(&inputData)
+	return &ChangeResolver{change: &inputData, err: nil}
 }
 
 // UpdateChange :
 func (r *Resolver) UpdateChange(args struct{ Input *model.UpdateChangeInput }) *ChangeResolver {
+
 	var c model.ChangeData
 	r.db.Where("code = ?", args.Input.Code).First(&c)
+	fmt.Println(string(c.Code) + c.Message)
+	if c.Code == "" {
+		inputError := model.Error{
+			Code:        args.Input.Code,
+			Description: "ERROR: This change is already stored",
+		}
+		err := []*model.Error{}
+		err = append(err, &inputError)
+
+		return &ChangeResolver{change: nil, err: &err}
+	}
 
 	r.db.Model(&c).Updates(model.ChangeData{
 		Message:    args.Input.Message,
