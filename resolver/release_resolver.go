@@ -9,7 +9,7 @@ import (
 // ReleaseResolver :
 type ReleaseResolver struct {
 	release *model.Release
-	err     *model.Error
+	err     *model.AdviseMessageData
 }
 
 // Code :

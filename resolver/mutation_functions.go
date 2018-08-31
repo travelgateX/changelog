@@ -14,12 +14,12 @@ func (r *Resolver) CreateChange(args struct{ Input *model.CreateChangeInput }) *
 	var inputCode model.ChangeData
 	r.db.First(&inputCode, "code = ?", args.Input.Code)
 	if inputCode.Code != "" {
-		inputError := model.Error{
+		inputError := model.AdviseMessageData{
 			Code:        *args.Input.Code,
 			Description: "ERROR: This change is already stored",
 		}
-		err := []*model.Error{}
-		err = append(err, &inputError)
+		err := []model.AdviseMessageData{}
+		err = append(err, inputError)
 
 		return &ChangeResolver{change: &inputCode, err: &err}
 	}
@@ -45,12 +45,13 @@ func (r *Resolver) UpdateChange(args struct{ Input *model.UpdateChangeInput }) *
 	r.db.Where("code = ?", args.Input.Code).First(&c)
 	fmt.Println(string(c.Code) + c.Message)
 	if c.Code == "" {
-		inputError := model.Error{
-			Code:        args.Input.Code,
+		inputError := model.AdviseMessageData{
+			Code:        "c1",
 			Description: "ERROR: This change is already stored",
+			Level:       "ERROR",
 		}
-		err := []*model.Error{}
-		err = append(err, &inputError)
+		err := []model.AdviseMessageData{}
+		err = append(err, inputError)
 
 		return &ChangeResolver{change: nil, err: &err}
 	}

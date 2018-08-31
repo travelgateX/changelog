@@ -11,7 +11,7 @@ import (
 type ChangeEdgeResolver struct {
 	db   *gorm.DB
 	edge *relay.Edge
-	err  *[]*model.Error
+	err  *[]model.AdviseMessageData
 }
 
 // Cursor :

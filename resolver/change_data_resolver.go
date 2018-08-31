@@ -12,7 +12,6 @@ import (
 type ChangeDataResolver struct {
 	db         *gorm.DB
 	changeData *model.ChangeData
-	err        *[]*model.Error
 }
 
 // Code :

@@ -11,17 +11,36 @@ import (
 type ChangeResolver struct {
 	db     *gorm.DB
 	change *model.ChangeData
-	err    *[]*model.Error
+	err    *[]model.AdviseMessageData
 }
 
 // Code :
 func (r *ChangeResolver) Code() graphql.ID {
+	if r.err != nil {
+		return ""
+	}
 	return r.change.Code
 }
 
 // ChangeData :
 func (r *ChangeResolver) ChangeData() *ChangeDataResolver {
-	return &ChangeDataResolver{db: r.db, changeData: r.change, err: r.err}
+	if r.err != nil {
+		return &ChangeDataResolver{db: r.db, changeData: nil}
+	}
+	return &ChangeDataResolver{db: r.db, changeData: r.change}
+}
+
+// AdviseMessage :
+func (r *ChangeResolver) AdviseMessage(args struct{ Level *[]*model.AdviseMessageLevel }) *[]*AdviseMessageResolver {
+	if r.err == nil {
+		return nil
+	}
+	s := []*AdviseMessageResolver{}
+	for _, res := range *r.err {
+		s = append(s, &AdviseMessageResolver{AdviseMessage: &res})
+	}
+
+	return &s
 }
 
 // CreatedAt :

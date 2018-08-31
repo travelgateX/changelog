@@ -11,7 +11,7 @@ import (
 type ChangeConnectionResolver struct {
 	db   *gorm.DB
 	conn *relay.Connection
-	err  *[]*model.Error
+	err  *[]model.AdviseMessageData
 }
 
 // PageInfo :

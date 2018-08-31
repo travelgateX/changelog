@@ -22,3 +22,10 @@ enum SourcePlatform{
   SLACK
   OTHER
 }
+
+enum AdviseMessageLevel {
+  WARN
+  ERROR
+  INFO
+}
+
