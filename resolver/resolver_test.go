@@ -18,7 +18,6 @@ var _ = Describe("Resolver", func() {
 		// Variable declaration
 		UpdateData model.UpdateChangeInput
 		CreateData model.CreateChangeInput
-		DeleteData model.DeleteChangeInput
 		cResolver  resolver.Resolver
 	)
 
@@ -79,15 +78,5 @@ var _ = Describe("Resolver", func() {
 				Expect(result.ChangeData().Code()).To(Equal(graphql.ID(*CreateData.Code)))
 			})
 		})
-	})
-
-	Describe("Deleting change...", func() {
-		Context("Soft-deleting change, found by code", func() {
-			It("should be marked as deleted after DeleteChangeInput runs", func() {
-				s := struc
-
-			})
-		})
-
 	})
 })
