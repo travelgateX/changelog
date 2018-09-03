@@ -2,7 +2,6 @@ package resolver
 
 import (
 	"changelog/model"
-	"fmt"
 	"time"
 
 	graphql "github.com/graph-gophers/graphql-go"
@@ -15,13 +14,14 @@ func (r *Resolver) CreateChange(args struct{ Input *model.CreateChangeInput }) *
 	r.db.First(&inputCode, "code = ?", args.Input.Code)
 	if inputCode.Code != "" {
 		inputError := model.AdviseMessageData{
-			Code:        *args.Input.Code,
-			Description: "ERROR: This change is already stored",
+			Code:        "409",
+			Description: "Conflict: Code already stored",
+			Level:       "ERROR",
 		}
 		err := []model.AdviseMessageData{}
 		err = append(err, inputError)
 
-		return &ChangeResolver{change: &inputCode, err: &err}
+		return &ChangeResolver{change: nil, err: &err}
 	}
 
 	time := time.Now()
@@ -43,11 +43,10 @@ func (r *Resolver) UpdateChange(args struct{ Input *model.UpdateChangeInput }) *
 
 	var c model.ChangeData
 	r.db.Where("code = ?", args.Input.Code).First(&c)
-	fmt.Println(string(c.Code) + c.Message)
 	if c.Code == "" {
 		inputError := model.AdviseMessageData{
-			Code:        "c1",
-			Description: "ERROR: This change is already stored",
+			Code:        "404",
+			Description: "Not found: Code",
 			Level:       "ERROR",
 		}
 		err := []model.AdviseMessageData{}
@@ -71,8 +70,21 @@ func (r *Resolver) DeleteChange(args struct{ Input *model.DeleteChangeInput }) *
 	c := model.ChangeData{
 		Code: graphql.ID(args.Input.Code),
 	}
+	var d model.ChangeData
+	r.db.Where("code = ?", args.Input.Code).First(&d)
+	if d.Code == "" {
+		inputError := model.AdviseMessageData{
+			Code:        "404",
+			Description: "Not found: Code",
+			Level:       "ERROR",
+		}
+		err := []model.AdviseMessageData{}
+		err = append(err, inputError)
+		return &ChangeResolver{change: nil, err: &err}
 
+	}
 	// Get all matched records
 	r.db.Where("code = ?", args.Input.Code).Delete(c)
+
 	return &ChangeResolver{change: &c, err: nil}
 }

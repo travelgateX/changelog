@@ -24,8 +24,8 @@ func (r *ChangeResolver) Code() graphql.ID {
 
 // ChangeData :
 func (r *ChangeResolver) ChangeData() *ChangeDataResolver {
-	if r.err != nil {
-		return &ChangeDataResolver{db: r.db, changeData: nil}
+	if r.change == nil {
+		return nil
 	}
 	return &ChangeDataResolver{db: r.db, changeData: r.change}
 }

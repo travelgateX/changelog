@@ -3,7 +3,7 @@ type Change implements Node{
   # A unique identifier
   code: ID!
   # Change Data
-  changeData: ChangeData!
+  changeData: ChangeData
   # Date created
   createdAt: Time!
   # Date updated
