@@ -5,7 +5,7 @@ import (
 	"changelog/context"
 	"changelog/model"
 	"changelog/resolver"
-	"fmt"
+	"log"
 
 	graphql "github.com/graph-gophers/graphql-go"
 	. "github.com/onsi/ginkgo"
@@ -28,18 +28,6 @@ var _ = Describe("Resolver", func() {
 
 	BeforeEach(func() {
 		// Load Config & DB
-		c, err1 := config.LoadConfig("./../config")
-		Expect(err1).NotTo(HaveOccurred())
-
-		db, err2 := context.OpenDB(c)
-		Expect(err2).NotTo(HaveOccurred())
-
-		err3 := db.DB().Ping()
-		Expect(err3).NotTo(HaveOccurred())
-
-		// Resolver.resolver init
-		cResolver = *resolver.NewRoot(db)
-
 		// TODO:
 		// Set up state for specs.
 		UpdateData = model.UpdateChangeInput{
@@ -69,16 +57,32 @@ var _ = Describe("Resolver", func() {
 		}
 
 		UpdateDataTest = model.UpdateChangeInput{
-			Code:    newCode,
+			Code:    newCodeTest,
 			Message: "Updated message",
 			Project: "Updated project",
 			Type:    model.ChangeType("CHANGED"),
 		}
 
 		DeleteDataTest = model.DeleteChangeInput{
-			Code: newCode,
+			Code: newCodeTest,
 		}
 
+	})
+	JustBeforeEach(func() {
+		// c, err1 := config.LoadConfig("./../config")
+		// Expect(err1).NotTo(HaveOccurred())
+
+		// db, err2 := context.OpenDB(c)
+		// Expect(err2).NotTo(HaveOccurred())
+		// err3 := db.DB().Ping()
+		// Expect(err3).NotTo(HaveOccurred())
+
+		xx += "justBeforeEach. "
+
+		log.Printf("ZZZZZZZZZZZZZZZZZZZZZZZ JUST BEFORE EACH. DB = %v, xx = %v\n", db, xx)
+
+		// Resolver.resolver init
+		cResolver = *resolver.NewRoot(db)
 	})
 
 	// UpdateChange function test
@@ -86,7 +90,19 @@ var _ = Describe("Resolver", func() {
 		Context("if code is not already stored in DB", func() {
 			It("should have the same values in DB after the UpdateChange function", func() {
 				//UpdateChange
-				fmt.Print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" + UpdateData.Code)
+				c, err1 := config.LoadConfig("./../config")
+				Expect(err1).NotTo(HaveOccurred())
+
+				xxxx, err2 := context.OpenDB(c)
+				Expect(err2).NotTo(HaveOccurred())
+
+				err3 := xxxx.DB().Ping()
+				Expect(err3).NotTo(HaveOccurred())
+
+				cResolver = *resolver.NewRoot(xxxx)
+
+				xx += "Updatechange test! "
+				log.Printf("XXXXXXXXXXXXXXXXXXXXXX JUST BEFORE EACH. DB = %v, xx = %v, c = %v\n", xxxx, xx, c)
 				s := struct{ Input *model.UpdateChangeInput }{&UpdateData}
 				result := *cResolver.UpdateChange(s)
 				Expect(result.ChangeData().Code()).To(Equal(graphql.ID(UpdateData.Code)))
@@ -95,6 +111,8 @@ var _ = Describe("Resolver", func() {
 
 		Context("if trying to update non existing change", func() {
 			It("should return an advise message and the data in change should be null", func() {
+				xx += "Updatechange test! "
+
 				// Use code to test error handling when code is duplicated
 				wrongCode := model.UpdateChangeInput{
 					Code: "asdas",
@@ -142,42 +160,47 @@ var _ = Describe("Resolver", func() {
 			})
 		})
 	})
-	Describe("Full test, create, update and delete same node", func() {
-		fmt.Print(*CreateDataTest.Code)
-		fmt.Print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" + UpdateDataTest.Code)
-		// Add new data to DB
-		s := struct{ Input *model.CreateChangeInput }{&CreateDataTest}
-		result := *cResolver.CreateChange(s)
-		_ = result
-		// Fetch data
-		var resultDB model.ChangeData
-		db.First(&resultDB, "code = ?", CreateDataTest.Code)
-		// Asert create
-		Expect(resultDB.Code).To(Equal(graphql.ID(*CreateDataTest.Code)))
-		Expect(resultDB.Message).To(Equal(CreateDataTest.Message))
-		Expect(resultDB.Project).To(Equal(CreateDataTest.Project))
-		Expect(resultDB.Type).To(Equal(CreateDataTest.Type))
+	Describe("Integration test", func() {
+		Context("from pre-loaded data, perform create, update and delete functions", func() {
+			It("should pass all the asserts", func() {
 
-		// Update same data
-		up := struct{ Input *model.UpdateChangeInput }{&UpdateDataTest}
-		upRes := *cResolver.UpdateChange(up)
-		_ = upRes
-		// Fetch data
-		db.First(&resultDB, "code = ?", UpdateDataTest.Code)
-		// Assert Update
-		Expect(resultDB.Code).To(Equal(graphql.ID(UpdateDataTest.Code)))
-		Expect(resultDB.Message).To(Equal(UpdateDataTest.Message))
-		Expect(resultDB.Project).To(Equal(UpdateDataTest.Project))
-		Expect(resultDB.Type).To(Equal(UpdateDataTest.Type))
+				// Add new data to DB
+				s := struct{ Input *model.CreateChangeInput }{&CreateDataTest}
+				result := *cResolver.CreateChange(s)
+				_ = result
+				// Fetch data
 
-		// Delete same data
-		del := struct{ Input *model.DeleteChangeInput }{&DeleteDataTest}
-		delRes := *cResolver.DeleteChange(del)
-		_ = delRes
-		// Fetch data
-		db.Unscoped().Where("code=? ?", DeleteDataTest.Code).First(&resultDB)
-		// Assert Delete
-		Expect(resultDB.DeletedAt != nil)
+				var resultDB model.ChangeData
+				st := *CreateDataTest.Code
+				db.First(&resultDB, "code = ?", st)
 
+				// Asert create
+				Expect(resultDB.Code).To(Equal(graphql.ID(*CreateDataTest.Code)))
+				Expect(resultDB.Message).To(Equal(CreateDataTest.Message))
+				Expect(resultDB.Project).To(Equal(CreateDataTest.Project))
+				Expect(resultDB.Type).To(Equal(CreateDataTest.Type))
+
+				// Update same data
+				up := struct{ Input *model.UpdateChangeInput }{&UpdateDataTest}
+				upRes := *cResolver.UpdateChange(up)
+				_ = upRes
+				// Fetch data
+				db.First(&resultDB, "code = ?", UpdateDataTest.Code)
+				// Assert Update
+				Expect(resultDB.Code).To(Equal(graphql.ID(UpdateDataTest.Code)))
+				Expect(resultDB.Message).To(Equal(UpdateDataTest.Message))
+				Expect(resultDB.Project).To(Equal(UpdateDataTest.Project))
+				Expect(resultDB.Type).To(Equal(UpdateDataTest.Type))
+
+				// Delete same data
+				del := struct{ Input *model.DeleteChangeInput }{&DeleteDataTest}
+				delRes := *cResolver.DeleteChange(del)
+				_ = delRes
+				// Fetch data
+				db.Unscoped().Where("code=? ?", DeleteDataTest.Code).First(&resultDB)
+				// Assert Delete
+				Expect(resultDB.DeletedAt != nil)
+			})
+		})
 	})
 })
