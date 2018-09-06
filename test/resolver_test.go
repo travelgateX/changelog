@@ -3,12 +3,10 @@ package resolver_test
 import (
 	"changelog/config"
 	"changelog/context"
-	"changelog/mocks"
 	"changelog/model"
 	"changelog/resolver"
 	"log"
 
-	"github.com/golang/mock/gomock"
 	graphql "github.com/graph-gophers/graphql-go"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -26,16 +24,11 @@ var _ = Describe("Resolver", func() {
 		CreateDataTest model.CreateChangeInput
 		UpdateDataTest model.UpdateChangeInput
 		DeleteDataTest model.DeleteChangeInput
-
-		// Mock variables
-		mockCtrl *gomock.Controller
-		mockMut  *mocks.MockMutations
 	)
 
 	BeforeEach(func() {
 		// Load Config & DB
-
-		mockCtrl = gomock.NewController(GinkgoT())
+		// TODO:
 		// Set up state for specs.
 		UpdateData = model.UpdateChangeInput{
 			Code:    "ch3",
@@ -118,9 +111,19 @@ var _ = Describe("Resolver", func() {
 
 		Context("if trying to update non existing change", func() {
 			It("should return an advise message and the data in change should be null", func() {
+				xx += "Updatechange test! "
 
+				// Use code to test error handling when code is duplicated
+				wrongCode := model.UpdateChangeInput{
+					Code: "asdas",
+				}
+				k := struct{ Input *model.UpdateChangeInput }{&wrongCode}
+				result := *cResolver.UpdateChange(k)
+				type lf struct {
+					Level *[]*model.AdviseMessageLevel
+				}
+				Expect(result.AdviseMessage(lf{nil}) != nil)
 			})
-
 		})
 	})
 	// CreateChange function test
