@@ -1,6 +1,6 @@
 package model
 
-// CreateChangeInput :
+// UpdateChangeInput :
 type UpdateChangeInput struct {
 	Code    string
 	Message string

@@ -16,4 +16,4 @@ http-write-timeout = 10
 http-idle-timeout = 90
 
 [log]
-debug-mode = false
+debug-mode = true
