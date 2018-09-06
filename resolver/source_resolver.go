@@ -9,7 +9,7 @@ import (
 // SourceResolver :
 type SourceResolver struct {
 	source *model.Source
-	err    *model.Error
+	err    *model.AdviseMessageData
 }
 
 // Code :

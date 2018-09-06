@@ -10,7 +10,7 @@ import (
 // ReleaseDataResolver :
 type ReleaseDataResolver struct {
 	Release *model.ReleaseData
-	Error   *model.Error
+	Error   *model.AdviseMessageData
 }
 
 // Code :

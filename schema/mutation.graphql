@@ -1,4 +1,6 @@
 # Changelog mutations
 type Mutation {
-  a:Boolean
+  createChange(input:CreateChangeInput):Change!
+  updateChange(input:UpdateChangeInput):Change!
+  deleteChange(input:DeleteChangeInput):Change!
 }

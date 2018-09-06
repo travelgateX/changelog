@@ -2,6 +2,7 @@ package resolver
 
 import (
 	"changelog/model"
+	"fmt"
 
 	graphql "github.com/graph-gophers/graphql-go"
 	"github.com/jinzhu/gorm"
@@ -11,7 +12,6 @@ import (
 type ChangeDataResolver struct {
 	db         *gorm.DB
 	changeData *model.ChangeData
-	err        *[]*model.Error
 }
 
 // Code :
@@ -26,6 +26,7 @@ func (r *ChangeDataResolver) Message() string {
 
 // Project :
 func (r *ChangeDataResolver) Project() string {
+	fmt.Println("ChangeDataResolver : Project")
 	return *r.changeData.Project
 }
 

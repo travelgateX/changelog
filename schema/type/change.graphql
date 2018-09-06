@@ -3,11 +3,13 @@ type Change implements Node{
   # A unique identifier
   code: ID!
   # Change Data
-  changeData: ChangeData!
+  changeData: ChangeData
   # Date created
   createdAt: Time!
   # Date updated
   updatedAt: Time!
+  # Advise Message
+  adviseMessage(level: [AdviseMessageLevel]): [AdviseMessage!]
 }
 
 # Change info

@@ -1,0 +1,11 @@
+type AdviseMessage {
+    code: ID!
+    description: String!
+    level: AdviseMessageLevel!
+    external: ExternalMessage
+}
+
+type ExternalMessage	{
+  code: String
+  message: String!
+}
