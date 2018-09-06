@@ -1,4 +1,4 @@
-/vendor/*
+/vendor
 /schema/bindata.go
 /schema/full_schema.graphql.debug
 *.exe
