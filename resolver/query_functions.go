@@ -4,8 +4,6 @@ import (
 	"changelog/model"
 	"changelog/relay"
 	"context"
-
-	graphql "github.com/graph-gophers/graphql-go"
 )
 
 // Changelog resolves a list of changes
@@ -26,9 +24,4 @@ func changesToSliceInterface(changes []*model.ChangeData) []interface{} {
 		iFace = append(iFace, todo)
 	}
 	return iFace
-}
-
-// HelloWorldQuery :
-func (r *Resolver) HelloWorldQuery(args relay.Filters) *HelloWorldResolver {
-	return &HelloWorldResolver{HelloWorldText: args.Filters()["hello"].(string), ID: graphql.ID("uno")}
 }

@@ -1,7 +1,6 @@
 package resolver
 
 import (
-	"changelog/domain"
 	"changelog/model"
 
 	graphql "github.com/graph-gophers/graphql-go"
@@ -39,7 +38,7 @@ func (r *AdviseMessageResolver) External() *ExternalMessageResolver {
 
 // ExternalMessageResolver resolver for ExternalMessage
 type ExternalMessageResolver struct {
-	ExternalMessage *domain.ExternalMessage
+	ExternalMessage *model.ExternalMessage
 }
 
 // Code : externam message code

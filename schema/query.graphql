@@ -2,5 +2,4 @@
 type Query {
   # List of changes related to a project
   changelog(type:String, first: Int, last: Int, before: String, after:String):ChangeConnection!
-  helloWorldQuery(hello:String):Hellow!
 }
