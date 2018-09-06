@@ -5,7 +5,6 @@ import (
 	"changelog/context"
 	"changelog/model"
 	"changelog/resolver"
-	"log"
 
 	graphql "github.com/graph-gophers/graphql-go"
 	. "github.com/onsi/ginkgo"
@@ -30,25 +29,33 @@ var _ = Describe("Resolver", func() {
 		// Load Config & DB
 		// TODO:
 		// Set up state for specs.
-		UpdateData = model.UpdateChangeInput{
-			Code:    "ch3",
-			Message: "messageTest",
-			Project: "projectTest",
-			Type:    model.ChangeType("CHANGED"),
-		}
+		c, err1 := config.LoadConfig("./../config")
+		Expect(err1).NotTo(HaveOccurred())
 
-		newCode := "ch140"
+		db, err2 := context.OpenDB(c)
+		Expect(err2).NotTo(HaveOccurred())
+		err3 := db.DB().Ping()
+		Expect(err3).NotTo(HaveOccurred())
+
+		cResolver = *resolver.NewRoot(db)
+
+		newCode := "NewCode1"
 		CreateData = model.CreateChangeInput{
 			Code:    &newCode,
 			Message: "newMessage",
 			Project: "newProject",
 			Type:    model.ChangeType("ADDED"),
 		}
-
-		DeleteData = model.DeleteChangeInput{
-			Code: "ch7",
+		UpdateData = model.UpdateChangeInput{
+			Code:    newCode,
+			Message: "UpdatedMessageTest",
+			Project: "UpdatedProjectTest",
+			Type:    model.ChangeType("CHANGED"),
 		}
-		newCodeTest := "NewCode"
+		DeleteData = model.DeleteChangeInput{
+			Code: newCode,
+		}
+		newCodeTest := "NewCode2"
 		CreateDataTest = model.CreateChangeInput{
 			Code:    &newCodeTest,
 			Message: "NewMessage",
@@ -69,63 +76,8 @@ var _ = Describe("Resolver", func() {
 
 	})
 	JustBeforeEach(func() {
-		// c, err1 := config.LoadConfig("./../config")
-		// Expect(err1).NotTo(HaveOccurred())
-
-		// db, err2 := context.OpenDB(c)
-		// Expect(err2).NotTo(HaveOccurred())
-		// err3 := db.DB().Ping()
-		// Expect(err3).NotTo(HaveOccurred())
-
-		xx += "justBeforeEach. "
-
-		log.Printf("ZZZZZZZZZZZZZZZZZZZZZZZ JUST BEFORE EACH. DB = %v, xx = %v\n", db, xx)
-
-		// Resolver.resolver init
-		cResolver = *resolver.NewRoot(db)
 	})
 
-	// UpdateChange function test
-	Describe("Creating a new change input... ", func() {
-		Context("if code is not already stored in DB", func() {
-			It("should have the same values in DB after the UpdateChange function", func() {
-				//UpdateChange
-				c, err1 := config.LoadConfig("./../config")
-				Expect(err1).NotTo(HaveOccurred())
-
-				xxxx, err2 := context.OpenDB(c)
-				Expect(err2).NotTo(HaveOccurred())
-
-				err3 := xxxx.DB().Ping()
-				Expect(err3).NotTo(HaveOccurred())
-
-				cResolver = *resolver.NewRoot(xxxx)
-
-				xx += "Updatechange test! "
-				log.Printf("XXXXXXXXXXXXXXXXXXXXXX JUST BEFORE EACH. DB = %v, xx = %v, c = %v\n", xxxx, xx, c)
-				s := struct{ Input *model.UpdateChangeInput }{&UpdateData}
-				result := *cResolver.UpdateChange(s)
-				Expect(result.ChangeData().Code()).To(Equal(graphql.ID(UpdateData.Code)))
-			})
-		})
-
-		Context("if trying to update non existing change", func() {
-			It("should return an advise message and the data in change should be null", func() {
-				xx += "Updatechange test! "
-
-				// Use code to test error handling when code is duplicated
-				wrongCode := model.UpdateChangeInput{
-					Code: "asdas",
-				}
-				k := struct{ Input *model.UpdateChangeInput }{&wrongCode}
-				result := *cResolver.UpdateChange(k)
-				type lf struct {
-					Level *[]*model.AdviseMessageLevel
-				}
-				Expect(result.AdviseMessage(lf{nil}) != nil)
-			})
-		})
-	})
 	// CreateChange function test
 	Describe("Creating a new change", func() {
 		Context("adding data from a manually created node", func() {
@@ -148,15 +100,40 @@ var _ = Describe("Resolver", func() {
 			})
 		})
 	})
+
+	// UpdateChange function test
+	Describe("Creating a new change input... ", func() {
+		Context("if code is not already stored in DB", func() {
+			It("should have the same values in DB after the UpdateChange function", func() {
+				s := struct{ Input *model.UpdateChangeInput }{&UpdateData}
+				result := *cResolver.UpdateChange(s)
+				Expect(result.ChangeData().Code()).To(Equal(graphql.ID(UpdateData.Code)))
+			})
+		})
+
+		Context("if trying to update non existing change", func() {
+			It("should return an advise message and the data in change should be null", func() {
+				// Use code to test error handling when code is duplicated
+				wrongCode := model.UpdateChangeInput{
+					Code: "asdas",
+				}
+				k := struct{ Input *model.UpdateChangeInput }{&wrongCode}
+				result := *cResolver.UpdateChange(k)
+				type lf struct {
+					Level *[]*model.AdviseMessageLevel
+				}
+				Expect(result.AdviseMessage(lf{nil}) != nil)
+			})
+		})
+	})
+
 	// La función Unscoped no funciona debidamente
 	Describe("Deleting record from DB", func() {
 		Context("if code exists ", func() {
 			It("should mark it as soft-deleted", func() {
 				s := struct{ Input *model.DeleteChangeInput }{&DeleteData}
 				result := *cResolver.DeleteChange(s)
-				_ = result
-				var z model.ChangeData
-				db.Raw("SELECT * FROM changes WHERE code = ?", DeleteData.Code).Scan(&z)
+				Expect(result.ChangeData().Code()).To(Equal(graphql.ID(DeleteData.Code)))
 			})
 		})
 	})
@@ -164,12 +141,22 @@ var _ = Describe("Resolver", func() {
 		Context("from pre-loaded data, perform create, update and delete functions", func() {
 			It("should pass all the asserts", func() {
 
+				c, err1 := config.LoadConfig("./../config")
+				Expect(err1).NotTo(HaveOccurred())
+
+				db, err2 := context.OpenDB(c)
+				Expect(err2).NotTo(HaveOccurred())
+
+				err3 := db.DB().Ping()
+				Expect(err3).NotTo(HaveOccurred())
+
+				cResolver = *resolver.NewRoot(db)
+
 				// Add new data to DB
 				s := struct{ Input *model.CreateChangeInput }{&CreateDataTest}
 				result := *cResolver.CreateChange(s)
 				_ = result
 				// Fetch data
-
 				var resultDB model.ChangeData
 				st := *CreateDataTest.Code
 				db.First(&resultDB, "code = ?", st)
@@ -177,7 +164,7 @@ var _ = Describe("Resolver", func() {
 				// Asert create
 				Expect(resultDB.Code).To(Equal(graphql.ID(*CreateDataTest.Code)))
 				Expect(resultDB.Message).To(Equal(CreateDataTest.Message))
-				Expect(resultDB.Project).To(Equal(CreateDataTest.Project))
+				Expect(resultDB.Project).To(Equal(&CreateDataTest.Project))
 				Expect(resultDB.Type).To(Equal(CreateDataTest.Type))
 
 				// Update same data
@@ -189,7 +176,7 @@ var _ = Describe("Resolver", func() {
 				// Assert Update
 				Expect(resultDB.Code).To(Equal(graphql.ID(UpdateDataTest.Code)))
 				Expect(resultDB.Message).To(Equal(UpdateDataTest.Message))
-				Expect(resultDB.Project).To(Equal(UpdateDataTest.Project))
+				Expect(resultDB.Project).To(Equal(&UpdateDataTest.Project))
 				Expect(resultDB.Type).To(Equal(UpdateDataTest.Type))
 
 				// Delete same data
@@ -197,7 +184,7 @@ var _ = Describe("Resolver", func() {
 				delRes := *cResolver.DeleteChange(del)
 				_ = delRes
 				// Fetch data
-				db.Unscoped().Where("code=? ?", DeleteDataTest.Code).First(&resultDB)
+				db.Unscoped().Where("code = ?", DeleteDataTest.Code).First(&resultDB)
 				// Assert Delete
 				Expect(resultDB.DeletedAt != nil)
 			})

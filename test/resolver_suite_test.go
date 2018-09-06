@@ -1,8 +1,8 @@
 package resolver_test
-(
+
+import (
 	"changelog/config"
 	"changelog/context"
-	"log"
 	"testing"
 
 	"github.com/jinzhu/gorm"
