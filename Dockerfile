@@ -16,6 +16,12 @@ RUN curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
 RUN cd $SRC_PATH \
     && dep ensure -update && dep ensure -vendor-only
 
+# GET TESTING PKG
+RUN go get github.com/onsi/ginkgo github.com/onsi/gomega
+
+# RENAME CONFIG.TOML.EXAMPLE
+RUN mv $SRC_PATH/config/config.toml.example $SRC_PATH/config/config.toml
+
 # BUILD PROJECT AND LAUNCH
 RUN cd $SRC_PATH \
     && go build -o /go/bin/changelog
