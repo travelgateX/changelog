@@ -1,4 +1,10 @@
-ignored = ["github.com/onsi/ginkgo", "github.com/onsi/gomega"]
+[[override]]
+  name = "gopkg.in/fsnotify.v1"
+  source = "gopkg.in/fsnotify/fsnotify.v1"
+
+[[override]]
+  branch = "master"
+  name = "github.com/hpcloud/tail"
 
 [[constraint]]
   name = "github.com/golang/mock"
